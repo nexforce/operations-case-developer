@@ -22,10 +22,8 @@ const upload = multer({ storage: storage });
 
 app.use(express.json());
 
-const indexRouter = require('./routes/index');
 const productRouter = require('./routes/products');
 
-app.use('/', indexRouter);
 app.use('/products', productRouter);
 
 app.listen(port, () => {

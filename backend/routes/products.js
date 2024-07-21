@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -16,11 +17,11 @@ const upload = multer({ storage: storage });
 let products = [];
 
 router.post('/', upload.single('image'), (req, res) => {
-    const { id, nome, preco, estoque } = req.body;
+    const { nome, preco, estoque } = req.body;
     const image = req.file ? req.file.filename : null;
 
     const newProduct = {
-        id,
+        id: uuidv4(),
         nome,
         preco,
         estoque,
