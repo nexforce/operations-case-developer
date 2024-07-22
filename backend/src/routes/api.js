@@ -4,10 +4,16 @@ const { body } = require("express-validator");
 
 const ProductController = require("../controllers/ProductController.js");
 
+/* GET Categories */
+router.get("/products/categories", ProductController.getAllCategories);
+
+/* GET Filter Products By Category  */
+router.get("/products/categories/:categoryName", ProductController.filterProductsByCategory);
+
 /* GET Products */
 router.get("/products", ProductController.getAllProducts);
 
-/* GET Product */
+/* GET Product By Id  */
 router.get("/products/:productId", ProductController.getProductById);
 
 /* DELETE Product */
@@ -74,5 +80,6 @@ router.patch(
     ],
     ProductController.updateProduct
 );
+
 
 module.exports = router;

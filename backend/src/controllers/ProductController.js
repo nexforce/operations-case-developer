@@ -61,3 +61,22 @@ exports.updateProduct = async (req, res) => {
         res.status(400).send(error.message); // Bad Request
     }
 };
+
+exports.getAllCategories = async (req, res) => {
+    try {
+        const categories = await productService.getAllCategories();
+        res.json(categories);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+};
+
+exports.filterProductsByCategory = async (req, res) => {
+    const categoryName = req.params.categoryName;
+    try {
+        const filteredProducts = await productService.filterProductsByCategory(categoryName);
+        res.json(filteredProducts);
+    } catch (error) {
+        res.status(404).send(error.message); // Not Found
+    }
+};

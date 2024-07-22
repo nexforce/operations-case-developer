@@ -1,5 +1,6 @@
 const ProductRepository = require("../repositories/ProductRepository.js");
 const CategoryRepository = require("../repositories/CategoryRepository.js");
+const { where } = require("sequelize");
 
 class ProductService {
     constructor() {
@@ -38,7 +39,9 @@ class ProductService {
                     {
                         model: this.categoryRepository.model,
                         as: "Categories",
-                        attributes: ["id", "name"],
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
                     },
                 ],
                 attributes: {
@@ -59,7 +62,9 @@ class ProductService {
                     {
                         model: this.categoryRepository.model,
                         as: "Categories",
-                        attributes: ["id", "name"],
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
                     },
                 ],
                 attributes: {
@@ -114,6 +119,58 @@ class ProductService {
             return this.getProductById(productId);
         } catch (error) {
             console.error(`Failed to update product with ID ${productId}:`, error);
+            throw error;
+        }
+    }
+
+    async getAllCategories() {
+        try {
+            const categories = await this.categoryRepository.getAll({
+                include: [
+                    {
+                        model: this.productRepository.model,
+                        as: "Products",
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
+                    },
+                ],
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
+            });
+            return categories;
+        } catch (error) {
+            console.error("Failed to fetch all products:", error);
+            throw error;
+        }
+    }
+
+    async filterProductsByCategory(categoryName) {
+        try {
+            const products = await this.productRepository.getAll({
+                include: [
+                    {
+                        model: this.categoryRepository.model,
+                        as: "Categories",
+                        where: { name: categoryName },
+                        attributes: {
+                            exclude: ["createdAt", "updatedAt"]
+                        }
+                    },
+                ],
+                attributes: {
+                    exclude: ["createdAt", "updatedAt"]
+                }
+            });
+
+            if (products.length > 0) {
+                return products;
+            } else {
+                throw new Error("No product found with the provided category.");
+            }
+        } catch (error) {
+            console.error(error);
             throw error;
         }
     }
