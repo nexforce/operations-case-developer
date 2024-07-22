@@ -3,10 +3,10 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#FFA500', // Laranja
+            main: '#FFA500',
         },
         secondary: {
-            main: '#FF5722', // Laranja mais escuro
+            main: '#FF5722',
         },
     },
 });

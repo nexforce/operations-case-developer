@@ -1,75 +1,116 @@
-import React, { useState } from 'react';
-import { TextField, Button, Paper, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Paper } from '@mui/material';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ProductForm = ({ product, onSave }) => {
-    const [nome, setNome] = useState(product ? product.nome : '');
-    const [preco, setPreco] = useState(product ? product.preco : '');
-    const [estoque, setEstoque] = useState(product ? product.estoque : '');
-    const [image, setImage] = useState(null);
+const ProductForm = ({ onSave }) => {
+    const [formState, setFormState] = useState({
+        nome: '',
+        preco: '',
+        estoque: '',
+        image: null
+    });
+    const navigate = useNavigate();
+    const { id } = useParams();
+
+    useEffect(() => {
+        if (id) {
+            const fetchProduct = async () => {
+                try {
+                    const response = await axios.get(`http://localhost:4000/products/${id}`);
+                    setFormState({
+                        nome: response.data.nome,
+                        preco: response.data.preco,
+                        estoque: response.data.estoque,
+                        image: response.data.image
+                    });
+                } catch (error) {
+                    console.error('Erro ao carregar produto:', error);
+                }
+            };
+            fetchProduct();
+        }
+    }, [id]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormState((prevState) => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleImageChange = (e) => {
+        setFormState((prevState) => ({
+            ...prevState,
+            image: e.target.files[0]
+        }));
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formData = new FormData();
-        formData.append('nome', nome);
-        formData.append('preco', preco);
-        formData.append('estoque', estoque);
-        if (image) formData.append('image', image);
+        formData.append('nome', formState.nome);
+        formData.append('preco', formState.preco);
+        formData.append('estoque', formState.estoque);
+        if (formState.image) {
+            formData.append('image', formState.image);
+        }
 
         try {
-            if (product) {
-                await axios.put(`http://localhost:4000/products/${product.id}`, formData);
+            if (id) {
+                await axios.put(`http://localhost:4000/products/${id}`, formData);
             } else {
                 await axios.post('http://localhost:4000/products', formData);
             }
             onSave();
+            navigate('/');
         } catch (error) {
             console.error('Erro ao salvar produto:', error);
         }
     };
 
+    const handleCancel = () => {
+        navigate('/');
+    };
+
     return (
         <Paper style={{ padding: 20 }}>
-            <Typography variant="h6">{product ? 'Editar Produto' : 'Adicionar Novo Produto'}</Typography>
             <form onSubmit={handleSubmit}>
                 <TextField
                     label="Nome"
-                    variant="outlined"
+                    name="nome"
+                    value={formState.nome}
+                    onChange={handleChange}
                     fullWidth
                     margin="normal"
-                    value={nome}
-                    onChange={(e) => setNome(e.target.value)}
                 />
                 <TextField
                     label="Preço"
-                    variant="outlined"
+                    name="preco"
+                    value={formState.preco}
+                    onChange={handleChange}
                     fullWidth
                     margin="normal"
-                    value={preco}
-                    onChange={(e) => setPreco(e.target.value)}
                 />
                 <TextField
                     label="Quantidade em Estoque"
-                    variant="outlined"
+                    name="estoque"
+                    value={formState.estoque}
+                    onChange={handleChange}
                     fullWidth
                     margin="normal"
-                    value={estoque}
-                    onChange={(e) => setEstoque(e.target.value)}
                 />
                 <input
                     type="file"
-                    onChange={(e) => setImage(e.target.files[0])}
-                    style={{ marginTop: 10 }}
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    style={{ margin: '20px 0' }}
                 />
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    style={{ marginTop: 20 }}
-                >
-                    {product ? 'Salvar Alterações' : 'Adicionar Produto'}
-                </Button>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Button variant="contained" color="primary" type="submit">Salvar</Button>
+                    <Button variant="contained" color="secondary" onClick={handleCancel}>Cancelar</Button>
+                </div>
             </form>
         </Paper>
     );
