@@ -2,14 +2,13 @@ const createError = require("http-errors");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const { Sequelize } = require("sequelize");
+const sequelize = require("./config/db.js");
 require("dotenv").config();
 
 const apiRouter = require("./routes/api.js");
 
 const app = express();
 const port = process.env.PORT || 3900;
-const sequelize = new Sequelize(process.env.POSTGRES_URL);
 
 app.use(logger("dev"));
 app.use(express.json());
