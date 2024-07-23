@@ -1,0 +1,35 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.modal h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.modal form div {
+  margin-bottom: 10px;
+}
+
+.modal label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.modal input {
+  width: calc(100% - 20px);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+}
