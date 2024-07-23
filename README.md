@@ -88,3 +88,5 @@ To view the project board, click [here](https://www.notion.so/837729658bca41b287
 - `main.py`: Custom script written in Python.
 - `README`: Contains the documentation for the script.
 
+### Commits in original project
+![alt text](commits_tree.png)
