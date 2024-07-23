@@ -1,0 +1,8 @@
+CREATE TABLE movies (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  director VARCHAR(100) NOT NULL,
+  year INT NOT NULL,
+  genre VARCHAR(100) NOT NULL,
+  rating INT NOT NULL
+);
