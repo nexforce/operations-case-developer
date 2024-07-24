@@ -1,4 +1,5 @@
 import AddToCartBtn from "../components/AddToCartBtn";
+import DeleteProductBtn from "../components/DeleteProductButton";
 import GetIcon from "../components/GetIcon";
 import Quantity from "../components/Quantity";
 import Title from "../components/Title";
@@ -56,6 +57,10 @@ const Detail = () => {
                             <img src={result.data.image} alt="" />
                         </div>
                         <div className={styles.info}>
+                            <div className={styles.title}>
+                                <Title txt={result.data.title} transform="uppercase" size={20} />
+                                <DeleteProductBtn productId={id} />
+                            </div>
                             <div className={styles.category}>
                                 {result.data.Categories.map((category, index) => (
                                     <Link
