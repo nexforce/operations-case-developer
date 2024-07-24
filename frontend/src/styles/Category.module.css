@@ -1,0 +1,23 @@
+@import "./_variables.css";
+
+.category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.category .container {
+    width: 100%;
+    max-width: 1920px;
+    margin-top: 1rem;
+    padding: 0.5rem;
+}
+
+.category .container .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category .container .row .title {
+    padding: 0.5rem;
+}
