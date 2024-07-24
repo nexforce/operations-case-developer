@@ -3,6 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const sequelize = require("./config/db.js");
+var cors = require("cors")
 require("dotenv").config();
 
 const apiRouter = require("./routes/api.js");
@@ -10,6 +11,7 @@ const apiRouter = require("./routes/api.js");
 const app = express();
 const port = process.env.PORT || 3900;
 
+app.use(cors())
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,9 +38,9 @@ app.use(function(err, req, res, next) {
 async function connectDatabase() {
     try {
         await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+        console.log("Connection has been established successfully.");
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        console.error("Unable to connect to the database:", error);
     }
 }
 
