@@ -7,9 +7,11 @@ import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Category from "./pages/Category";
 import UpdateProductPage from "./pages/UpdatePage";
+import CreateProductPage from "./pages/CreatePage";
 
 // COMPONENTS
 import Header from "./components/Header";
+import CartSidebar from "./components/CartSidebar";
 import Footer from "./components/Footer";
 import MobileBottomNav from "./components/MobileBottomNav";
 
@@ -38,6 +40,9 @@ const App = () => {
                             <Route path="/category/:slug">
                                 <Category />
                             </Route>
+                            <Route path="/create-product">
+                                <CreateProductPage />
+                            </Route>
                             <Route path="/update-product/:slug">
                                 <UpdateProductPage />
                             </Route>
@@ -45,11 +50,11 @@ const App = () => {
                     </main>
                     <Footer />
                 </div>
+                <CartSidebar />
                 {device.type === "mobile" && <MobileBottomNav />}
             </CartContextProvider>
         </Router>
     );
-
 };
 
 export default App;
