@@ -1,0 +1,15 @@
+@import "./_variables.css";
+
+container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+}
+
+.container.paddingForMobile {
+  padding-bottom: 50px;
+}
