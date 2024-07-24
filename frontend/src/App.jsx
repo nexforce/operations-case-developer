@@ -5,6 +5,10 @@ import clsx from "clsx";
 // PAGES
 import Home from "./pages/Home";
 
+// COMPONENTS
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+
 // HOOKS
 import useMobileDetect from "./hooks/useMobileDetect";
 
@@ -18,6 +22,7 @@ const App = () => {
         <Router>
             <CartContextProvider>
                 <div className={clsx(device.type === "mobile" && styles.paddingForMobile, styles.container)}>
+                    <Header />
                     <main className={styles.main}>
                         <Switch>
                             <Route path="/" exact>
@@ -25,10 +30,12 @@ const App = () => {
                             </Route>
                         </Switch>
                     </main>
+                    <Footer />
                 </div>
             </CartContextProvider>
         </Router>
     );
+
 };
 
 export default App;

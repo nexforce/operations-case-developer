@@ -1,0 +1,19 @@
+@import "./_variables.css";
+
+.footer {
+    padding: 0 1rem;
+    background-color: var(--color-silver);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    gap: 10px;
+    text-transform: uppercase;
+}
