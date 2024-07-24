@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 // COMPONENTS
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import MobileBottomNav from "./components/MobileBottomNav";
 
 // HOOKS
 import useMobileDetect from "./hooks/useMobileDetect";
@@ -32,6 +33,7 @@ const App = () => {
                     </main>
                     <Footer />
                 </div>
+                {device.type === "mobile" && <MobileBottomNav />}
             </CartContextProvider>
         </Router>
     );

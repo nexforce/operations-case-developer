@@ -1,0 +1,86 @@
+@import "./_variables.css";
+
+.mobileCart {
+  height: calc(100% - 50px);
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mobileCart .cartTotal {
+  width: 100%;
+  margin-top: auto;
+  height: 150px;
+  padding: 1rem;
+  border-top: 1px solid var(--color-dark-gray);
+}
+
+.mobileCart .cartTotal .total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobileCart .cartTotal .totalPrice {
+  margin-top: 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.mobileCart .cartTotal .totalPrice>small {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.mobileCart .cartTotal .totalPrice .price {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.mobileCart .cartTotal .confirmBtn {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #019267;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 1.15rem;
+  padding: 0 10px;
+  height: 37px;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.mobileCart .emptyCart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.mobileCart .emptyCart>img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.mobileCart .emptyCart>button {
+  width: 100%;
+  height: 37px;
+  border-radius: var(--border-radius);
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+}

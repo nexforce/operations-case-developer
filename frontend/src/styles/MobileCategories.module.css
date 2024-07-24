@@ -1,0 +1,14 @@
+@import "./_variables.css";
+
+.mobileCategories {
+  padding: 1rem;
+}
+
+.mobileCategories .mobileCategoriesMenu {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileCategories .mobileCategoriesMenu>li {
+  width: 100%;
+}

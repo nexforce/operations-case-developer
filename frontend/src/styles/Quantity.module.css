@@ -1,0 +1,36 @@
+@import "./_variables.css";
+
+.quantity {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(var(--color-black), 0.25);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.quantity .quantityBtn {
+  background-color: transparent;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-dark-gray);
+}
+
+.quantity>input {
+  text-align: center;
+  outline: none;
+}
+
+.quantity>input::-webkit-outer-spin-button,
+.quantity>input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity>input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
