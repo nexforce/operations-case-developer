@@ -26,7 +26,6 @@ const App = () => {
                         </Switch>
                     </main>
                 </div>
-                {device.type === "mobile" && <MobileBottomNav />}
             </CartContextProvider>
         </Router>
     );
