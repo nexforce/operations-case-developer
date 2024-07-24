@@ -1,0 +1,32 @@
+@import "./_variables.css";
+
+.addToCart {
+    flex: 1;
+    padding: 0 10px;
+    height: 37px;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.5s;
+    color: var(--color-red);
+    background-color: transparent;
+}
+
+.addToCart:hover {
+    color: var(--color-white);
+    background-color: var(--color-red);
+}
+
+@media (max-width: 768px) {
+    .card .content .footer .addToCart {
+        min-height: 40px;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
