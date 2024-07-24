@@ -6,6 +6,7 @@ import clsx from "clsx";
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
 import Category from "./pages/Category";
+import UpdateProductPage from "./pages/UpdatePage";
 
 // COMPONENTS
 import Header from "./components/Header";
@@ -36,6 +37,9 @@ const App = () => {
                             </Route>
                             <Route path="/category/:slug">
                                 <Category />
+                            </Route>
+                            <Route path="/update-product/:slug">
+                                <UpdateProductPage />
                             </Route>
                         </Switch>
                     </main>

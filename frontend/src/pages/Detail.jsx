@@ -59,6 +59,11 @@ const Detail = () => {
                         <div className={styles.info}>
                             <div className={styles.title}>
                                 <Title txt={result.data.title} transform="uppercase" size={20} />
+                                <Link
+                                    to={`/update-product/${id}`}
+                                >
+                                    <button>Editar Produto</button>
+                                </Link>
                                 <DeleteProductBtn productId={id} />
                             </div>
                             <div className={styles.category}>
