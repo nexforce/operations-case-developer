@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 // PAGES
 import Home from "./pages/Home";
+import Detail from "./pages/Detail";
 import Category from "./pages/Category";
 
 // COMPONENTS
@@ -29,6 +30,9 @@ const App = () => {
                         <Switch>
                             <Route path="/" exact>
                                 <Home />
+                            </Route>
+                            <Route path="/product/:slug">
+                                <Detail />
                             </Route>
                             <Route path="/category/:slug">
                                 <Category />

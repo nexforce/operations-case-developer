@@ -1,0 +1,139 @@
+@import "./_variables.css";
+
+.detail {
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.detail .content {
+    width: 768px;
+    margin-top: 1rem;
+}
+
+.detail .content .top {
+    display: flex;
+    width: 100%;
+}
+
+.detail .content .top .img {
+    min-width: 300px;
+    max-width: 300px;
+    height: 300px;
+    padding: 10px;
+    border: 1px solid rgba(51, 51, 51, 0.1);
+    /* Using --dark-gray */
+    border-radius: var(--border-radius);
+}
+
+.detail .content .top .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.detail .content .top .info {
+    padding-left: 10px;
+    width: 100%;
+}
+
+.detail .content .top .info .title {
+    color: #333;
+    /* Using --dark-gray */
+}
+
+.detail .content .top .info .category {
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+.detail .content .top .info .rating {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.detail .content .top .info .rating .stars {
+    display: flex;
+    gap: 2px;
+}
+
+.detail .content .top .info .price {
+    display: flex;
+    font-weight: 500;
+    font-size: 1.45rem;
+}
+
+.detail .content .top .info .price p {
+    width: 100%;
+    border-radius: var(--border-radius);
+    color: #000;
+    /* Assuming black is represented as #000 */
+}
+
+.detail .content .top .info .addToCartAndQuantity {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.detail .content .top .info .addToCartAndQuantity .addToCart {
+    padding: 0 10px;
+    flex: 1;
+    height: 37px;
+    border-radius: var(--border-radius);
+    text-transform: uppercase;
+    font-family: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: all 0.5s;
+    color: #fff;
+    /* Using --white */
+    background-color: rgba(255, 0, 0, 0.8);
+    /* Using --red */
+}
+
+.detail .content .top .info .addToCartAndQuantity .quantityBox {
+    margin-right: 10px;
+}
+
+.detail .content .bottom {
+    margin-top: 30px;
+}
+
+.detail .content .bottom .desc {
+    font-size: 0.95rem;
+    font-weight: 400;
+    border-top: 1px solid rgba(51, 51, 51, 0.1);
+    /* Using --dark-gray */
+    padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .detail .content {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .detail .content .top {
+        flex-direction: column;
+    }
+
+    .detail .content .top .img {
+        min-width: 100%;
+    }
+
+    .detail .content .top .addToCartAndQuantity {
+        width: 100%;
+    }
+
+    .detail .content .top .info {
+        margin-top: 10px;
+    }
+}
