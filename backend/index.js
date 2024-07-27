@@ -8,7 +8,9 @@ const port = 3000;
 //connection to database
 connectDB();
 
-app.get('/', router);
+app.use(express.json());
+app.use('/hardware/', router);
+
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
 })
