@@ -31,6 +31,8 @@ Esta é uma aplicação de gerenciamento de inventário desenvolvida como parte 
 ## Como rodar a aplicação
 - Clone o repositório.
 - Instale as dependências do backend: `cd backend; npm install`
+- Crie .env e adcione a variavel de ambiente DATABASE_URL o url do banco de dados;
+- Execute as migrations do prisma: `npx prisma migrate dev`
 - Rode o backend: `npm run dev`
 - Instale as dependências do frontend: `cd frontend; npm install`
 - Rode o frontend: `npm run start`
