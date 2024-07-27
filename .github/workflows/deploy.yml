@@ -1,0 +1,52 @@
+name: App CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: linux
+
+    strategy:
+      matrix:
+        node-version: [20.10.0]
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 8
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Configure Backend
+      run: cd backend
+      
+    - name: Install backend dependencies
+      run: npm install
+        
+    - name: Prisma
+      run: npx prisma generate
+
+    - name: BUILD
+      run: npm run build
+      
+    - name: Run project
+      run: npm run start
+
+    - name: Configure Frontend
+      run: cd frontend
+      
+    - name: Install frontend dependencies
+      run: npm install
+
+    - name: BUILD
+      run: npm run build
+      
+    - name: Run project
+      run: npm run start
+      
+  
