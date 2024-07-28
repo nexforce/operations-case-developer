@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts, postProducts, deleteProducts } from '../utils/apiService';
+import { getProducts, postProducts, deleteProducts, updateProducts } from '../utils/apiService';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import ModalComponent from './modalComponent';
 import DeleteModal from './deleteComponent';
@@ -28,15 +28,21 @@ const TableComponent = () => {
         getData();
     }, []);
 
-    const handleModal = () => {
+    const handleModal = (product = null) => {
+        setSelectedProduct(product);
         setIsModalVisible(true);
     };
 
-    const handleCloseModal = async (newProduct) => {
-        if (newProduct) {
-            await postProducts(newProduct);
+    const handleCloseModal = async (updatedProduct) => {
+        if (updatedProduct) {
+            if (selectedProduct) {
+                await updateProducts(updatedProduct, selectedProduct._id);
+            } else {
+                await postProducts(updatedProduct);
+            }
         }
         setIsModalVisible(false);
+        setSelectedProduct(null);
         getData();
     };
 
@@ -57,7 +63,10 @@ const TableComponent = () => {
     return (
         <div className="flex min-h-screen items-center justify-center">
             <div className="overflow-x-auto">
-                <button className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-700 transition duration-150 ease-in-out hover:bg-green-600 bg-black rounded text-white px-3 py-1 text-sm" onClick={handleModal}>
+                <button
+                    className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-700 transition duration-150 ease-in-out hover:bg-green-600 bg-black rounded text-white px-3 py-1 text-sm"
+                    onClick={() => handleModal(null)}
+                >
                     +
                 </button>
                 <table className="min-w-full bg-white shadow-md rounded-xl mt-4">
@@ -79,22 +88,28 @@ const TableComponent = () => {
                                     <button
                                         className="text-black-600 hover:text-black-800"
                                         aria-label="Editar"
+                                        onClick={() => handleModal(product)}
                                     >
                                         <PencilIcon className="h-5 w-5" />
                                     </button>
                                     <button
                                         className="ml-3 text-black-600 hover:text-black-800"
                                         aria-label="Deletar"
+                                        onClick={() => handleDeleteModal(product._id)}
                                     >
-                                        <TrashIcon onClick={() => handleDeleteModal(product._id)} className="h-5 w-5" />
+                                        <TrashIcon className="h-5 w-5" />
                                     </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                <ModalComponent isVisible={isModalVisible} onClose={handleCloseModal}/>
-                <DeleteModal isVisible={isModalDeleteVisible} onClose={handleCloseDeleteModal} productId={selectedProduct}/>
+                <ModalComponent isVisible={isModalVisible} onClose={handleCloseModal} product={selectedProduct} />
+                <DeleteModal
+                    isVisible={isModalDeleteVisible}
+                    onClose={handleCloseDeleteModal}
+                    productId={selectedProduct}
+                />
             </div>
         </div>
     );

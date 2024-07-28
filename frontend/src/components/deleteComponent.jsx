@@ -30,7 +30,6 @@ const DeleteModal = ({isVisible, onClose, productId}) => {
                     </div>
             </div>
         </div>
-
     );
 };
 
