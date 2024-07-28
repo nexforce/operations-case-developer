@@ -12,6 +12,10 @@ const hardwareSchema = new mongoose.Schema({
     price: {
         type: Number,
         required: true
+    },
+    hubspotId: {
+        type: String,
+        required: false
     }
 });
 
