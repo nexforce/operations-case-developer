@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts } from '../utils/apiService';
+import { getProducts, postProducts } from '../utils/apiService';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import ModalComponent from './modalComponent';
 
@@ -29,8 +29,12 @@ const TableComponent = () => {
         setIsModalVisible(true);
     };
 
-    const handleCloseModal = () => {
+    const handleCloseModal = async (newProduct) => {
+        if (newProduct) {
+            await postProducts(newProduct);
+        }
         setIsModalVisible(false);
+        getData();
     };
 
     return (
