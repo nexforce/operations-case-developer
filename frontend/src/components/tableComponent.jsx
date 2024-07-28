@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { getProducts, postProducts } from '../utils/apiService';
+import { getProducts, postProducts, deleteProducts } from '../utils/apiService';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import ModalComponent from './modalComponent';
+import DeleteModal from './deleteComponent';
 
 const TableComponent = () => {
     const [data, setData] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const getData = async () => {
         try {
@@ -34,6 +37,20 @@ const TableComponent = () => {
             await postProducts(newProduct);
         }
         setIsModalVisible(false);
+        getData();
+    };
+
+    const handleDeleteModal = (id) => {
+        setSelectedProduct(id);
+        setIsModalDeleteVisible(true);
+    };
+
+    const handleCloseDeleteModal = async () => {
+        if (selectedProduct) {
+            await deleteProducts(selectedProduct);
+        }
+        setIsModalDeleteVisible(false);
+        setSelectedProduct(null);
         getData();
     };
 
@@ -66,10 +83,10 @@ const TableComponent = () => {
                                         <PencilIcon className="h-5 w-5" />
                                     </button>
                                     <button
-                                        className="text-black-600 hover:text-black-800"
+                                        className="ml-3 text-black-600 hover:text-black-800"
                                         aria-label="Deletar"
                                     >
-                                        <TrashIcon className="h-5 w-5" />
+                                        <TrashIcon onClick={() => handleDeleteModal(product._id)} className="h-5 w-5" />
                                     </button>
                                 </td>
                             </tr>
@@ -77,6 +94,7 @@ const TableComponent = () => {
                     </tbody>
                 </table>
                 <ModalComponent isVisible={isModalVisible} onClose={handleCloseModal}/>
+                <DeleteModal isVisible={isModalDeleteVisible} onClose={handleCloseDeleteModal} productId={selectedProduct}/>
             </div>
         </div>
     );
