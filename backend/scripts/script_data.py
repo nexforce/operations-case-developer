@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Carregar variáveis de ambiente
 load_dotenv(dotenv_path='.env')
 
 def parse_date(date_str):
