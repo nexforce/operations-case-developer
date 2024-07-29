@@ -1,0 +1,68 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body {
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+  background: linear-gradient(to right, #25c481, #25b7c4);
+  font-family: "Roboto", sans-serif;
+  /* padding: 30px; */
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+}
+.new-product {
+  width: 100%;
+  margin-bottom: 50px;
+}
+.new-product .group-inputs {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.custom-slider {
+  width: 250px;
+  display: flex;
+  margin-right: 20px;
+}
+button + button {
+  margin-left: 10px;
+}
+button {
+  border: none;
+  padding: 8px 16px;
+  color: #fff;
+  background-color: rgba(0, 115, 255, 0.598);
+  cursor: pointer;
+  border-radius: 7px;
+  transition: 300ms;
+}
+button:active {
+  transform: scale(0.9);
+}
+
+h1 {
+  font-size: 30px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+
+.new-product-button {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  height: 40px;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
