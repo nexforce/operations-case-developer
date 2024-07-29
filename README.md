@@ -18,6 +18,7 @@ app.use(cors({
 
 - Para rodar a Interface | npm run dev
 - Para rodar o script | python script_data.py
+- Para roddar testes | npm test
 - Você pode configurar seu próprio banco MongoDB para verificar os dados sendo enviados, conecte-o com a API via mongoose (já instalado)
 
 #O hubspot:
