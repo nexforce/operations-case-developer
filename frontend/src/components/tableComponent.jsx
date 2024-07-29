@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import { getProducts } from '../utils/apiService';
+import { getProducts, getCategories } from '../utils/apiService.js';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import ModalComponent from './modalComponent';
 import DeleteModal from './deleteComponent';
+import CategoryComponent from './categoryComponent';
 
 const TableComponent = () => {
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [isModalDeleteVisible, setIsModalDeleteVisible] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -14,8 +18,10 @@ const TableComponent = () => {
         try {
             const response = await getProducts();
             const products = response.hardware || [];
+            
             if (Array.isArray(products)) {
                 setData(products);
+                setFilteredData(products);
             } else {
                 console.error('Missing or invalid hardware data', products);
             }
@@ -24,9 +30,33 @@ const TableComponent = () => {
         }
     };
 
+    const getCategoriesData = async () => {
+        try {
+            const response = await getCategories();
+            const categories = response || [];
+
+            if (Array.isArray(categories)) {
+                setCategories(categories);
+            } else {
+                console.error('Missing or invalid categories data', categories);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
     useEffect(() => {
         getData();
+        getCategoriesData();
     }, []);
+
+    useEffect(() => {
+        if (selectedCategory) {
+            setFilteredData(data.filter(product => product.category === selectedCategory));
+        } else {
+            setFilteredData(data);
+        }
+    }, [selectedCategory, data]);
 
     const handleModal = async (product = null) => {
         setSelectedProduct(product);
@@ -58,12 +88,15 @@ const TableComponent = () => {
         <div className="flex min-h-screen items-center justify-center">
             <div className="overflow-x-auto">
                 <button
-                    className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-700 transition duration-150 ease-in-out hover:bg-green-600 bg-black rounded text-white px-2 py-0 text-sm"
+                    className="ml-3 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-700 transition duration-150 ease-in-out hover:bg-green-600 bg-black rounded text-white px-2 py-0.5 text-sm"
                     onClick={() => handleModal(null)}
-                >
-                    +
+                > +
                 </button>
-                <table className="min-w-full bg-white shadow-md rounded-xl mt-4">
+                <CategoryComponent
+                    options={categories}
+                    onSelect={setSelectedCategory}
+                />
+                <table className="min-w-full bg-white shadow-md rounded-xl mt-6">
                     <thead>
                         <tr className="bg-blue-gray-100 text-gray-700">
                             <th className="py-3 px-4 text-left">Nome</th>
@@ -73,7 +106,7 @@ const TableComponent = () => {
                         </tr>
                     </thead>
                     <tbody className="text-blue-gray-900">
-                        {data.map((product, index) => (
+                        {filteredData.map((product, index) => (
                             <tr key={index} className="border-b border-blue-gray-200">
                                 <td className="py-3 px-4">{product.name}</td>
                                 <td className="py-3 px-4">{product.category}</td>
