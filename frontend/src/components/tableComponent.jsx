@@ -4,6 +4,7 @@ import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import ModalComponent from './modalComponent';
 import DeleteModal from './deleteComponent';
 import CategoryComponent from './categoryComponent';
+import PriceComponent from './priceComponent.jsx';
 
 const TableComponent = () => {
     const [data, setData] = useState([]);
@@ -84,6 +85,14 @@ const TableComponent = () => {
         await getData();
     };
 
+    const handlePriceFilter = (maxPrice) => {
+        if (maxPrice) {
+            setFilteredData(data.filter(product => product.price <= maxPrice));
+        } else {
+            setFilteredData(data);
+        }
+    };
+
     return (
         <div className="flex min-h-screen items-center justify-center">
             <div className="overflow-x-auto">
@@ -96,6 +105,7 @@ const TableComponent = () => {
                     options={categories}
                     onSelect={setSelectedCategory}
                 />
+                <PriceComponent onFilter={handlePriceFilter} />
                 <table className="min-w-full bg-white shadow-md rounded-xl mt-6">
                     <thead>
                         <tr className="bg-blue-gray-100 text-gray-700">
