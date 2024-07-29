@@ -9,7 +9,7 @@ e identifico possíveis padrões. Em seguida, ploto um gráfico de barras mostra
 #Como rodar o projeto: 
 
 - Instale os requirements de cada projeto (front e back) | cd frontend -> npm install | cd backend -> npm install |
-- Crie e ative sua venv para rodar o script python (lembrando que o back deve estar rodando enquanto isso) |
+- Crie e ative sua venv para rodar o script python (lembrando que o back deve estar rodando enquanto isso) | cd scripts -> .\.venv\Scripts\activate -> python script_data.py 
 - Para rodar a API | nodemon start
 
 app.use(cors({
@@ -53,8 +53,7 @@ const connectDB = async () => {
 #Arquivos gerados pela análise de dados:
 
 -[Arquivo Csv](./backend/scripts/data.csv)
+
 -[Arquivo Json](./backend/scripts/data.json)
+
 ![Gráfico de Barras](./backend/scripts/creation_dates_histogram.png)
-
-#Projeto em funcionamento:
-
