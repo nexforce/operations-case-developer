@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { postProducts, updateProducts } from "../utils/apiService";
+import { postProducts, updateProducts } from "../utils/apiService.js";
 import PropTypes from 'prop-types';
 
 const ModalComponent = ({isVisible, onClose, product}) => {
@@ -18,6 +18,14 @@ const ModalComponent = ({isVisible, onClose, product}) => {
             setPrice('');
         }
     }, [product]);
+
+    useEffect(() => {
+        if (!isVisible) {
+            setName('');
+            setCategory('');
+            setPrice('');
+        }
+    }, [isVisible]);    
 
     const handleSubmit = async () => {
         try {

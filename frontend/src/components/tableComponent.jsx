@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getProducts, postProducts, deleteProducts, updateProducts } from '../utils/apiService';
+import { getProducts } from '../utils/apiService';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import ModalComponent from './modalComponent';
 import DeleteModal from './deleteComponent';
@@ -28,43 +28,37 @@ const TableComponent = () => {
         getData();
     }, []);
 
-    const handleModal = (product = null) => {
+    const handleModal = async (product = null) => {
         setSelectedProduct(product);
         setIsModalVisible(true);
     };
 
-    const handleCloseModal = async (updatedProduct) => {
-        if (updatedProduct) {
-            if (selectedProduct) {
-                await updateProducts(updatedProduct, selectedProduct._id);
-            } else {
-                await postProducts(updatedProduct);
-            }
-        }
+    const handleCloseModal = async () => {
         setIsModalVisible(false);
         setSelectedProduct(null);
-        getData();
+        await getData();
     };
-
-    const handleDeleteModal = (id) => {
-        setSelectedProduct(id);
-        setIsModalDeleteVisible(true);
+    
+    const handleDeleteModal = (product) => {
+        if (product && product._id) {
+            setSelectedProduct(product);
+            setIsModalDeleteVisible(true);
+        } else {
+            console.error('Error to delete product', product);
+        }
     };
 
     const handleCloseDeleteModal = async () => {
-        if (selectedProduct) {
-            await deleteProducts(selectedProduct);
-        }
         setIsModalDeleteVisible(false);
         setSelectedProduct(null);
-        getData();
+        await getData();
     };
 
     return (
         <div className="flex min-h-screen items-center justify-center">
             <div className="overflow-x-auto">
                 <button
-                    className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-700 transition duration-150 ease-in-out hover:bg-green-600 bg-black rounded text-white px-3 py-1 text-sm"
+                    className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black-700 transition duration-150 ease-in-out hover:bg-green-600 bg-black rounded text-white px-2 py-0 text-sm"
                     onClick={() => handleModal(null)}
                 >
                     +
@@ -95,7 +89,7 @@ const TableComponent = () => {
                                     <button
                                         className="ml-3 text-black-600 hover:text-black-800"
                                         aria-label="Deletar"
-                                        onClick={() => handleDeleteModal(product._id)}
+                                        onClick={() => handleDeleteModal(product)}
                                     >
                                         <TrashIcon className="h-5 w-5" />
                                     </button>
@@ -108,7 +102,7 @@ const TableComponent = () => {
                 <DeleteModal
                     isVisible={isModalDeleteVisible}
                     onClose={handleCloseDeleteModal}
-                    productId={selectedProduct}
+                    product={selectedProduct}
                 />
             </div>
         </div>

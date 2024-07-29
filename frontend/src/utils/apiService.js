@@ -35,3 +35,12 @@ export const deleteProducts = async (id) => {
         console.error(err);
     }
 }
+
+export const getCategories = async () => {
+    try {
+        const response = await api.get('/hardware/all-categories/');
+        return response.data;
+    } catch (err) {
+        console.error(err);
+    }
+}

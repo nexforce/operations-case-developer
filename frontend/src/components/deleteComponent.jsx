@@ -1,12 +1,11 @@
-import { deleteProducts } from "../utils/apiService";
+import { deleteProducts } from "../utils/apiService.js";
 import PropTypes from 'prop-types';
 
-const DeleteModal = ({isVisible, onClose, productId}) => {
+const DeleteModal = ({isVisible, onClose, product}) => {
     const handleSubmit= async (e) => {
         e.preventDefault();
-        console.log(productId);
         try {
-            await deleteProducts(productId);
+            await deleteProducts(product._id);
             onClose();
         } catch (err) {
             console.error('Failed to delete product', err);
@@ -36,6 +35,7 @@ const DeleteModal = ({isVisible, onClose, productId}) => {
 DeleteModal.propTypes = {
     isVisible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
-    productId: PropTypes.string.isRequired,
+    product: PropTypes.shape({ _id: PropTypes.string.isRequired })
 };
+
 export default DeleteModal;
