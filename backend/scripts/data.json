@@ -1,0 +1,120 @@
+{
+    "results": [
+        {
+            "id": "14281282976",
+            "properties": {
+                "hs_createdate": "2024-07-27T18:05:01.161Z",
+                "hs_lastmodifieddate": "2024-07-27T18:08:52.915Z",
+                "hs_object_id": "14281282976"
+            },
+            "createdAt": "2024-07-27T18:05:01.161Z",
+            "updatedAt": "2024-07-27T18:08:52.915Z",
+            "archived": false
+        },
+        {
+            "id": "14281282978",
+            "properties": {
+                "hs_createdate": "2024-07-27T18:05:22.617Z",
+                "hs_lastmodifieddate": "2024-07-27T18:08:39.559Z",
+                "hs_object_id": "14281282978"
+            },
+            "createdAt": "2024-07-27T18:05:22.617Z",
+            "updatedAt": "2024-07-27T18:08:39.559Z",
+            "archived": false
+        },
+        {
+            "id": "14282454814",
+            "properties": {
+                "hs_createdate": "2024-07-27T18:06:35.668Z",
+                "hs_lastmodifieddate": "2024-07-27T18:08:04.981Z",
+                "hs_object_id": "14282454814"
+            },
+            "createdAt": "2024-07-27T18:06:35.668Z",
+            "updatedAt": "2024-07-27T18:08:04.981Z",
+            "archived": false
+        },
+        {
+            "id": "14292279674",
+            "properties": {
+                "hs_createdate": "2024-07-28T21:37:46.602Z",
+                "hs_lastmodifieddate": "2024-07-28T22:11:23.128Z",
+                "hs_object_id": "14292279674"
+            },
+            "createdAt": "2024-07-28T21:37:46.602Z",
+            "updatedAt": "2024-07-28T22:11:23.128Z",
+            "archived": false
+        },
+        {
+            "id": "14292442882",
+            "properties": {
+                "hs_createdate": "2024-07-28T22:09:31.490Z",
+                "hs_lastmodifieddate": "2024-07-29T14:52:05.396Z",
+                "hs_object_id": "14292442882"
+            },
+            "createdAt": "2024-07-28T22:09:31.490Z",
+            "updatedAt": "2024-07-29T14:52:05.396Z",
+            "archived": false
+        },
+        {
+            "id": "14292442904",
+            "properties": {
+                "hs_createdate": "2024-07-28T22:11:16.440Z",
+                "hs_lastmodifieddate": "2024-07-28T22:11:16.844Z",
+                "hs_object_id": "14292442904"
+            },
+            "createdAt": "2024-07-28T22:11:16.440Z",
+            "updatedAt": "2024-07-28T22:11:16.844Z",
+            "archived": false
+        },
+        {
+            "id": "14292492379",
+            "properties": {
+                "hs_createdate": "2024-07-28T22:11:00.985Z",
+                "hs_lastmodifieddate": "2024-07-28T22:11:28.386Z",
+                "hs_object_id": "14292492379"
+            },
+            "createdAt": "2024-07-28T22:11:00.985Z",
+            "updatedAt": "2024-07-28T22:11:28.386Z",
+            "archived": false
+        },
+        {
+            "id": "14298475418",
+            "properties": {
+                "hs_createdate": "2024-07-29T13:32:24.989Z",
+                "hs_lastmodifieddate": "2024-07-29T13:32:26.756Z",
+                "hs_object_id": "14298475418"
+            },
+            "createdAt": "2024-07-29T13:32:24.989Z",
+            "updatedAt": "2024-07-29T13:32:26.756Z",
+            "archived": false
+        },
+        {
+            "id": "14298533981",
+            "properties": {
+                "hs_createdate": "2024-07-29T13:44:55.475Z",
+                "hs_lastmodifieddate": "2024-07-29T15:24:06.802Z",
+                "hs_object_id": "14298533981"
+            },
+            "createdAt": "2024-07-29T13:44:55.475Z",
+            "updatedAt": "2024-07-29T15:24:06.802Z",
+            "archived": false
+        },
+        {
+            "id": "14298567040",
+            "properties": {
+                "hs_createdate": "2024-07-29T14:07:00.273Z",
+                "hs_lastmodifieddate": "2024-07-29T14:07:00.856Z",
+                "hs_object_id": "14298567040"
+            },
+            "createdAt": "2024-07-29T14:07:00.273Z",
+            "updatedAt": "2024-07-29T14:07:00.856Z",
+            "archived": false
+        }
+    ],
+    "paging": {
+        "next": {
+            "after": "14298567041",
+            "link": "https://api.hubapi.com/crm/v3/objects/hardwares?after=14298567041"
+        }
+    }
+}
