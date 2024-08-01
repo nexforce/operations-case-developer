@@ -1,9 +1,11 @@
+import './config/environment'
+
 import express from 'express'
 import routes from './config/routes'
-import './config/environment'
 
 const app = express()
 
+app.use(express.json())
 app.use(routes)
 
 const SERVER_PORT = 5000
