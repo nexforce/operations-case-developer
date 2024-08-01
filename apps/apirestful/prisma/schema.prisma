@@ -38,7 +38,7 @@ model Breed {
   pets Pet[]
 }
 
-model Contacts {
+model Contact {
   id String @id @default(uuid())
   name String
   email String
