@@ -1,5 +1,6 @@
 import express from 'express'
 import routes from './config/routes'
+import './config/environment'
 
 const app = express()
 
