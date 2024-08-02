@@ -75,7 +75,7 @@ class UpdatePetController {
       }
     })
 
-    return response.status(200).json(pet)
+    return response.status(204).send()
   }
 }
 
