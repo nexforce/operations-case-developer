@@ -10,6 +10,10 @@ class CreatePetController {
     const breed = request.body['breed'] as string
     const contactId = request.body['contactId'] as string
 
+    if (!name) {
+      return response.status(400).send()
+    }
+
     const properties = { name, age: age.toString(), breed }
 
     const associationCategory = AssociationSpecAssociationCategoryEnum.UserDefined
