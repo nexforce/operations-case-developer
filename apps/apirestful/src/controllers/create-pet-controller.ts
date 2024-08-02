@@ -16,6 +16,8 @@ class CreatePetController {
       })
     }
 
+    if (!age) return response.status(400).send()
+
     const properties = { name, age: age.toString(), breed }
 
     const associationCategory = AssociationSpecAssociationCategoryEnum.UserDefined
