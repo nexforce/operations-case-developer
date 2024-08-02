@@ -22,5 +22,19 @@ describe('Create Pet Controller', () => {
 
       expect(response.statusCode).toBe(400)
     })
+
+    it('when name is not provided, then should get bad request error message', async () => {
+      const pet: Pet = {
+        age: 1,
+        breed: 'Pelo Curto Brasileiro',
+        contactId: '821172829'
+      }
+
+      const response = await request(app).post('/pet').send(pet)
+
+      expect(response.body).toEqual({
+        message: 'Name is not provided. Ensure a non-empty text is provided.'
+      })
+    })
   })
 })
