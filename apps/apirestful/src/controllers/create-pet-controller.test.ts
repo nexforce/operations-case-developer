@@ -36,5 +36,17 @@ describe('Create Pet Controller', () => {
         message: 'Name is not provided. Ensure a non-empty text is provided.'
       })
     })
+
+    it('when age is not provided, then should get bad request error', async () => {
+      const pet: Pet = {
+        name: 'Ella',
+        breed: 'Pelo Curto Brasileiro',
+        contactId: '821172829'
+      }
+
+      const response = await request(app).post('/pet').send(pet)
+
+      expect(response.statusCode).toBe(400)
+    })
   })
 })
