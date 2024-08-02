@@ -11,7 +11,9 @@ class CreatePetController {
     const contactId = request.body['contactId'] as string
 
     if (!name) {
-      return response.status(400).send()
+      return response.status(400).send({
+        message: 'Name is not provided. Ensure a non-empty text is provided.'
+      })
     }
 
     const properties = { name, age: age.toString(), breed }
