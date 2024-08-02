@@ -2,58 +2,67 @@ import { Request, Response } from 'express'
 import { db } from '../services/db/client'
 import hubspotClient from '../services/hubspot-client'
 
+type UpdateProps = {
+  name?: string
+  age?: number
+  breedId?: string
+}
+
 class UpdatePetController {
   async handle(request: Request, response: Response) {
-    const petId = request.body['petId'] as string
+    const petId = request.params['id'] as string
     const name = request.body['name'] as string
     const age = request.body['age'] as number
     const breedId = request.body['breedId'] as string
 
-    const update = {
-      name: '',
-      age: 0,
-      breedId: ''
-    }
+    let update: UpdateProps = {}
 
     if (name) {
-      update.name = name
+      update = { ...update, name }
     }
 
     if (age && age > 0) {
-      update.age = age
+      update = { ...update, age }
     }
 
     if (breedId) {
-      update.breedId = breedId
+      update = { ...update, breedId }
     }
 
     const petFound = await db.pet.findUnique({
       where: {
         id: petId
+      },
+      include: {
+        breed: true
       }
     })
 
     if (!petFound) return response.status(404).json({ message: 'Pet not found' })
 
-    const petHubSpotId = petFound?.hubSpotId
+    const breedOfPetFound = petFound.breed
 
-    const breed = await db.breed.findUnique({
-      where: {
-        id: breedId
-      }
-    })
+    const petHubSpotId = petFound.hubSpotId
 
-    if (!breed) return response.status(404).json({ message: 'Breed not found' })
+    let breed = undefined
 
-    const results = await hubspotClient.crm.objects.basicApi.update('pets', petHubSpotId, {
+    if (update.breedId) {
+      breed = await db.breed.findUnique({
+        where: {
+          id: update.breedId
+        }
+      })
+
+      if (!breed) return response.status(404).json({ message: 'Breed not found' })
+    }
+
+    await hubspotClient.crm.objects.basicApi.update('pets', petHubSpotId, {
       properties: {
-        name: update.name,
-        age: update.age.toString(),
-        breed: breed.name
+        name: update.name ? update.name : petFound.name,
+        age: update?.age ? update.age?.toString() : petFound.age.toString(),
+        breed: update.breedId && breed ? breed.name : breedOfPetFound.name
       }
     })
-
-    console.log(results)
 
     const pet = await db.pet.update({
       where: {
@@ -66,7 +75,7 @@ class UpdatePetController {
       }
     })
 
-    return response.status(204).json(pet)
+    return response.status(200).json(pet)
   }
 }
 
