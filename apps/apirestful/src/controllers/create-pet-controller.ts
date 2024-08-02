@@ -14,20 +14,7 @@ class CreatePetController {
 
     const associationCategory = AssociationSpecAssociationCategoryEnum.UserDefined
 
-    //const pets = await hubspotClient.crm.objects.basicApi.getPage('pets', undefined, undefined, ['name', 'breed', 'age'])
-
-    const contacts = await hubspotClient.crm.objects.basicApi.getPage('contacts', undefined, undefined, ['name', 'email'])
-
-    console.log(contacts)
-
-
-    //const results1 = await hubspotClient.crm.associations.v4.basicApi.create('pets', '14348736435', 'contacts', '44671233162', [{ associationCategory: AssociationSpecAssociationCategoryEnum.UserDefined, associationTypeId: 19 }])
-    //
-    //console.log(results1)
-
-    //const results = await hubspotClient.crm.associations.v4.schema.definitionsApi.getAll('pets', 'contacts')
-
-    //const results = await hubspotClient.crm.associations.v4.basicApi.getPage('pets', '14348736435', 'contacts')
+    const contactFromHubspot = await hubspotClient.crm.objects.basicApi.getById('contacts', contactId)
 
     const results = await hubspotClient.crm.objects.basicApi.create('pets', {
       properties,
@@ -48,12 +35,13 @@ class CreatePetController {
       ]
     })
 
-    const contactFromHubspot = await hubspotClient.crm.objects.basicApi.getById('contacts', contactId)
+    const contactIdFromHubSpot = contactFromHubspot.id
 
     const contact = await db.contact.create({
       data: {
         name: contactFromHubspot.properties.firstname + ' ' + contactFromHubspot.properties.lastname.split(' ')[0],
-        email: contactFromHubspot.properties.email
+        email: contactFromHubspot.properties.email,
+        hubSpotId: contactIdFromHubSpot
       }
     })
 
@@ -63,12 +51,14 @@ class CreatePetController {
       }
     })
 
+    const petIdFromHubSpot = results.id
+
     const pet = await db.pet.create({
       data: {
         name,
         age,
         breedId: breedRecord.id,
-        hubSpotId: 'id',
+        hubSpotId: petIdFromHubSpot,
         contactId: contact.id
       }
     })
