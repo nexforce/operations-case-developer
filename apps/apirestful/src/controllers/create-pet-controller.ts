@@ -16,7 +16,9 @@ class CreatePetController {
       })
     }
 
-    if (!age) return response.status(400).send()
+    if (!age) return response.status(400).send({
+      message: 'Age is not provided. Ensure a value greater than 0 is provided.'
+    })
 
     const properties = { name, age: age.toString(), breed }
 
