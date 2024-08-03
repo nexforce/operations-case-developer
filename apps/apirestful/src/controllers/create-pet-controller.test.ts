@@ -122,7 +122,7 @@ describe('Create Pet Controller', () => {
         name: 'Ella',
         age: 1,
         breed: 'Pelo Curto Brasileiro',
-        contactId: '821172829'
+        contactId: '44671233162'
       }
 
       const response = await request(app).post('/pet').send(pet)
