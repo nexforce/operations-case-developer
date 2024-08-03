@@ -62,5 +62,17 @@ describe('Create Pet Controller', () => {
         message: 'Age is not provided. Ensure a value greater than 0 is provided.'
       })
     })
+
+    it('when breed is not provided, then should get bad request error', async () => {
+      const pet: Pet = {
+        name: 'Ella',
+        age: 1,
+        contactId: '821172829'
+      }
+
+      const response = await request(app).post('/pet').send(pet)
+
+      expect(response.statusCode).toEqual(400)
+    })
   })
 })
