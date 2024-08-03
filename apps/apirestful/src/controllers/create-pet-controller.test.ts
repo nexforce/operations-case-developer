@@ -88,5 +88,17 @@ describe('Create Pet Controller', () => {
         message: 'BreedId is not provided. Ensure a value of type uuid is provided.'
       })
     })
+
+    it('when contactId is not provided, then should get bad request error', async () => {
+      const pet: Pet = {
+        name: 'Ella',
+        age: 1,
+        breed: 'Pelo Curto Brasileiro'
+      }
+
+      const response = await request(app).post('/pet').send(pet)
+
+      expect(response.statusCode).toEqual(400)
+    })
   })
 })
