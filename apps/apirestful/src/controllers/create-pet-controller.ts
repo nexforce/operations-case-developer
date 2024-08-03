@@ -20,6 +20,8 @@ class CreatePetController {
       message: 'Age is not provided. Ensure a value greater than 0 is provided.'
     })
 
+    if (!breed) return response.status(400).send()
+
     const properties = { name, age: age.toString(), breed }
 
     const associationCategory = AssociationSpecAssociationCategoryEnum.UserDefined
