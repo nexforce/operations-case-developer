@@ -1,9 +1,14 @@
 import { Request, Response } from 'express'
-import hubspotClient from '../services/hubspot-client'
 import { db } from '../services/db/client'
-import { AssociationSpecAssociationCategoryEnum } from '@hubspot/api-client/lib/codegen/crm/deals/models/AssociationSpec'
+import CreatePetInHubSpotUseCase from '../usecases/create-pet-in-hub-spot'
+import GetContactByIdFromHubSpotUseCase from '../usecases/get-contact-by-id-from-hub-spot'
 
 class CreatePetController {
+  constructor(
+    private readonly createPetInHubSpot: CreatePetInHubSpotUseCase,
+    private readonly getContactIdFromHubSpot: GetContactByIdFromHubSpotUseCase
+  ) { }
+
   async handle(request: Request, response: Response) {
     const name = request.body['name'] as string
     const age = request.body['age'] as number
@@ -34,37 +39,18 @@ class CreatePetController {
       })
     }
 
-    const properties = { name, age: age.toString(), breed }
+    const properties = { name, age: age.toString(), breed, contactId }
 
-    const associationCategory = AssociationSpecAssociationCategoryEnum.UserDefined
+    const results = await this.createPetInHubSpot.create(properties)
 
-    const contactFromHubspot = await hubspotClient.crm.objects.basicApi.getById('contacts', contactId)
-
-    const results = await hubspotClient.crm.objects.basicApi.create('pets', {
-      properties,
-      associations: [
-        {
-          to: {
-            id: contactId
-          },
-          types: [
-            {
-              associationCategory: associationCategory,
-              associationTypeId: 19
-              // Create a type id for this association
-              // Link: https://legacydocs.hubspot.com/docs/methods/crm-associations/crm-associations-overview
-            }
-          ]
-        }
-      ]
-    })
+    const contactFromHubspot = await this.getContactIdFromHubSpot.getById(contactId)
 
     const contactIdFromHubSpot = contactFromHubspot.id
 
     const contact = await db.contact.create({
       data: {
-        name: contactFromHubspot.properties.firstname + ' ' + contactFromHubspot.properties.lastname.split(' ')[0],
-        email: contactFromHubspot.properties.email,
+        name: contactFromHubspot.firstname + ' ' + contactFromHubspot.lastname.split(' ')[0],
+        email: contactFromHubspot.email,
         hubSpotId: contactIdFromHubSpot
       }
     })
