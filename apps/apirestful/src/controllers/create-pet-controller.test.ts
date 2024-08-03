@@ -100,5 +100,19 @@ describe('Create Pet Controller', () => {
 
       expect(response.statusCode).toEqual(400)
     })
+
+    it('when contactId is not provided, then should get bad request error message', async () => {
+      const pet: Pet = {
+        name: 'Ella',
+        age: 1,
+        breed: 'Pelo Curto Brasileiro'
+      }
+
+      const response = await request(app).post('/pet').send(pet)
+
+      expect(response.body).toEqual({
+        message: 'ContactId is not provided. Ensure a value of type integer is provided. Read more about Contacts from HubSpot'
+      })
+    })
   })
 })
