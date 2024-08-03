@@ -24,7 +24,9 @@ class CreatePetController {
       message: 'BreedId is not provided. Ensure a value of type uuid is provided.'
     })
 
-    if (!contactId) return response.status(400).send()
+    if (!contactId) return response.status(400).send({
+      message: 'ContactId is not provided. Ensure a value of type integer is provided. Read more about Contacts from HubSpot'
+    })
 
     const properties = { name, age: age.toString(), breed }
 
