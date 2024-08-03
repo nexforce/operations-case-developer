@@ -24,6 +24,8 @@ class CreatePetController {
       message: 'BreedId is not provided. Ensure a value of type uuid is provided.'
     })
 
+    if (!contactId) return response.status(400).send()
+
     const properties = { name, age: age.toString(), breed }
 
     const associationCategory = AssociationSpecAssociationCategoryEnum.UserDefined
