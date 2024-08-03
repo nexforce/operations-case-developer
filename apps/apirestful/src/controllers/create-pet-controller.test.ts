@@ -115,4 +115,19 @@ describe('Create Pet Controller', () => {
       })
     })
   })
+
+  describe('given a valid body', () => {
+    it('should get created', async () => {
+      const pet: Pet = {
+        name: 'Ella',
+        age: 1,
+        breed: 'Pelo Curto Brasileiro',
+        contactId: '821172829'
+      }
+
+      const response = await request(app).post('/pet').send(pet)
+
+      expect(response.status).toEqual(201)
+    })
+  })
 })
