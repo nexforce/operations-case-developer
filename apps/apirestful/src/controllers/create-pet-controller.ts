@@ -1,13 +1,32 @@
 import { Request, Response } from 'express'
 import { db } from '../services/db/client'
-import CreatePetInHubSpotUseCase from '../usecases/create-pet-in-hub-spot'
-import GetContactByIdFromHubSpotUseCase from '../usecases/get-contact-by-id-from-hub-spot'
+import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
+// import { PetRepository } from '../repositories/pet-repository'
+// import { ContactRepository } from '../repositories/contact-repository'
+// import { BreedRepository } from '../repositories/breed-repository'
 
 class CreatePetController {
+  private createPetInHubSpot: CreatePetInCRMPlatform
+  private getContactIdFromHubSpot: GetContactByIdFromCRMPlatform 
+  // private petRepository: PetRepository
+  // private contactRepository: ContactRepository
+  // private breedRepository: BreedRepository
+
   constructor(
-    private readonly createPetInHubSpot: CreatePetInHubSpotUseCase,
-    private readonly getContactIdFromHubSpot: GetContactByIdFromHubSpotUseCase
-  ) { }
+    createPetInHubSpotInput: CreatePetInCRMPlatform,
+    getContactIdFromHubSpotInput: GetContactByIdFromCRMPlatform,
+    // petRepositoryInput: PetRepository,
+    // breedRepositoryInput: BreedRepository,
+    // contactRepositoryInput: ContactRepository,
+  ) { 
+    this.createPetInHubSpot = createPetInHubSpotInput
+    this.getContactIdFromHubSpot = getContactIdFromHubSpotInput
+    // this.petRepository = petRepositoryInput
+    // this.contactRepository = contactRepositoryInput
+    // this.breedRepository = breedRepositoryInput
+
+    this.handle = this.handle.bind(this);
+  }
 
   async handle(request: Request, response: Response) {
     const name = request.body['name'] as string
@@ -63,7 +82,7 @@ class CreatePetController {
 
     const petIdFromHubSpot = results.id
 
-    const pet = await db.pet.create({
+    const pet = db.pet.create({
       data: {
         name,
         age,
