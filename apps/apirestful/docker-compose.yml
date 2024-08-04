@@ -11,3 +11,16 @@ services:
     ports:
       - "5432:5432"
     restart: unless-stopped
+
+  test_database:
+    container_name: case_nexforce_database_test
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - /usr/docker/postgresql/test/case-nexforce/:/data/postgres
+    ports:
+      - "7432:5432"
+    restart: unless-stopped

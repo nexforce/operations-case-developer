@@ -1,6 +1,8 @@
-import { it, describe, expect } from 'vitest'
+import { it, describe, expect, beforeAll } from 'vitest'
 import request from 'supertest'
 import app from '../app'
+import CreatePetController from './create-pet-controller'
+import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
 
 type Pet = {
   name?: string
@@ -9,7 +11,48 @@ type Pet = {
   contactId?: string
 }
 
+type PetInput = { name: string; age: string; breed: string; contactId: string }
+type CreatePetResult = { id: string }
+
+class CreatePetInHubSpotUseCaseMock implements CreatePetInCRMPlatform {
+  async create (properties: PetInput): Promise<CreatePetResult> {
+    return {
+      id: '1'
+    }
+  }
+}
+
+type Contact = {
+  id: string
+  name: string
+  email: string
+  firstname: string
+  lastname: string
+}
+
+class GetContactByIdFromHubSpotUseCaseMock implements GetContactByIdFromCRMPlatform{
+  async getById (contactId: string):  Promise<Contact> {
+    return {
+      id: contactId,
+      name: 'name',
+      email: 'email',
+      firstname: 'firstname',
+      lastname: 'lastname'
+    }
+  }
+}
+
 describe('Create Pet Controller', () => {
+  beforeAll(() => {
+    const createPetInHubSpot = new CreatePetInHubSpotUseCaseMock()
+    const getContactIdFromHubSpot  = new GetContactByIdFromHubSpotUseCaseMock()
+    const createPetController = new CreatePetController(createPetInHubSpot, getContactIdFromHubSpot)
+
+    app.post('/pet', createPetController.handle)
+
+    console.log(process.env['DATABASE_URL'])
+  })
+
   describe('given a invalid body', () => {
     it('when name is not provided, then should get bad request error', async () => {
       const pet: Pet = {

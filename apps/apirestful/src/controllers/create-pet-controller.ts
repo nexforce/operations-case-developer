@@ -82,7 +82,7 @@ class CreatePetController {
 
     const petIdFromHubSpot = results.id
 
-    const pet = db.pet.create({
+    const pet = await db.pet.create({
       data: {
         name,
         age,

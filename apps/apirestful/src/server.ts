@@ -1,5 +1,8 @@
 import './config/environment'
 import app from './app'
+import routes from './config/routes'
+
+app.use(routes)
 
 const SERVER_PORT = 5000
 
