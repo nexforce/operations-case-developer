@@ -15,13 +15,15 @@ type Pet = {
   age?: number
   breed?: string
   contactId?: string
+
 }
 
 type PetInput = { name: string; age: string; breed: string; contactId: string }
 type CreatePetResult = { id: string }
 
 class CreatePetInHubSpotUseCaseMock implements CreatePetInCRMPlatform {
-  async create (properties: PetInput): Promise<CreatePetResult> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async create(_properties: PetInput): Promise<CreatePetResult> {
     return {
       id: '1'
     }
@@ -36,8 +38,8 @@ type Contact = {
   lastname: string
 }
 
-class GetContactByIdFromHubSpotUseCaseMock implements GetContactByIdFromCRMPlatform{
-  async getById (contactId: string):  Promise<Contact> {
+class GetContactByIdFromHubSpotUseCaseMock implements GetContactByIdFromCRMPlatform {
+  async getById(contactId: string): Promise<Contact> {
     return {
       id: contactId,
       name: 'name',
@@ -48,7 +50,7 @@ class GetContactByIdFromHubSpotUseCaseMock implements GetContactByIdFromCRMPlatf
   }
 }
 
-let dbClient: PrismaClient | undefined = undefined 
+let dbClient: PrismaClient | undefined = undefined
 
 describe('Create Pet Controller', () => {
   beforeAll(async () => {
@@ -58,7 +60,7 @@ describe('Create Pet Controller', () => {
     await connect(dbClient)
 
     const createPetInHubSpot = new CreatePetInHubSpotUseCaseMock()
-    const getContactIdFromHubSpot  = new GetContactByIdFromHubSpotUseCaseMock()
+    const getContactIdFromHubSpot = new GetContactByIdFromHubSpotUseCaseMock()
     const petRepository = new PrismaPetRepository()
     const contactRepository = new PrismaContactRepository()
     const breedRepository = new PrismaBreedRepository()

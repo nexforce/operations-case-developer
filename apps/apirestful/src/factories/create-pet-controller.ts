@@ -8,7 +8,7 @@ import { PrismaBreedRepository } from '../repositories/prisma-breed-repository'
 
 export const makeCreatePetController = () => {
   const createPetInHubSpot = new CreatePetInHubSpotUseCase()
-  const getContactIdFromHubSpot  = new GetContactByIdFromHubSpotUseCase()
+  const getContactIdFromHubSpot = new GetContactByIdFromHubSpotUseCase()
   const dbClient = createClient()
   const petRepository = new PrismaPetRepository()
   const contactRepository = new PrismaContactRepository()

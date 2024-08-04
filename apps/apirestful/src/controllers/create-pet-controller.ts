@@ -8,7 +8,7 @@ import { BreedRepository } from '../repositories/breed-repository'
 
 class CreatePetController {
   private createPetInHubSpot: CreatePetInCRMPlatform
-  private getContactIdFromHubSpot: GetContactByIdFromCRMPlatform 
+  private getContactIdFromHubSpot: GetContactByIdFromCRMPlatform
   private db: PrismaClient
   private petRepository: PetRepository
   private contactRepository: ContactRepository
@@ -21,7 +21,7 @@ class CreatePetController {
     petRepositoryInput: PetRepository,
     breedRepositoryInput: BreedRepository,
     contactRepositoryInput: ContactRepository,
-  ) { 
+  ) {
     this.createPetInHubSpot = createPetInHubSpotInput
     this.getContactIdFromHubSpot = getContactIdFromHubSpotInput
     this.db = db

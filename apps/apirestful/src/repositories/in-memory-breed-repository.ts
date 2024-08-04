@@ -4,17 +4,17 @@ import { BreedRepository, CreateBreedData } from "./breed-repository";
 export class InMemoryBreedRepository implements BreedRepository {
     private breeds: Breed[] = [];
 
-    async create(data: CreateBreedData): Promise<Breed>  {
+    async create(data: CreateBreedData): Promise<Breed> {
         const breed = {
             id: Math.random().toString(36).substring(2, 9),
             name: data.name,
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null
-        } 
+        }
 
-        this.breeds.push(breed) 
+        this.breeds.push(breed)
 
-        return breed 
+        return breed
     }
 }

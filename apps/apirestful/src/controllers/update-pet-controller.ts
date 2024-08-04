@@ -64,7 +64,7 @@ class UpdatePetController {
       }
     })
 
-    const pet = await db.pet.update({
+    await db.pet.update({
       where: {
         id: petId
       },

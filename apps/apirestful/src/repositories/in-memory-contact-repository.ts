@@ -1,10 +1,10 @@
-import {  Contact } from "@prisma/client";
+import { Contact } from "@prisma/client";
 import { ContactRepository, CreateContactData } from "./contact-repository";
 
-export class InMemoryContactRepository implements ContactRepository{
+export class InMemoryContactRepository implements ContactRepository {
     private contacts: Contact[] = [];
 
-    async create(data: CreateContactData): Promise<Contact>  {
+    async create(data: CreateContactData): Promise<Contact> {
         const contact = {
             id: Math.random().toString(36).substring(2, 9),
             name: data.name,
@@ -14,10 +14,10 @@ export class InMemoryContactRepository implements ContactRepository{
             createdAt: new Date(),
             updatedAt: new Date(),
             deletedAt: null
-        } 
+        }
 
-        this.contacts.push(contact) 
+        this.contacts.push(contact)
 
-        return contact 
+        return contact
     }
 }
