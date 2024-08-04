@@ -8,47 +8,11 @@ import { PrismaClient } from '@prisma/client'
 import { PrismaPetRepository } from '../repositories/prisma-pet-repository'
 import { PrismaContactRepository } from '../repositories/prisma-contact-repository'
 import { PrismaBreedRepository } from '../repositories/prisma-breed-repository'
+import { Pet } from '../data/pet'
+import { AllPropertiesOptional } from '../utils/types/all-undefined'
+import { makeCreatePetControllerTest } from '../factories/make-create-pet-controller-test'
 
-
-type Pet = {
-  name?: string
-  age?: number
-  breed?: string
-  contactId?: string
-
-}
-
-type PetInput = { name: string; age: string; breed: string; contactId: string }
-type CreatePetResult = { id: string }
-
-class CreatePetInHubSpotUseCaseMock implements CreatePetInCRMPlatform {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async create(_properties: PetInput): Promise<CreatePetResult> {
-    return {
-      id: '1'
-    }
-  }
-}
-
-type Contact = {
-  id: string
-  name: string
-  email: string
-  firstname: string
-  lastname: string
-}
-
-class GetContactByIdFromHubSpotUseCaseMock implements GetContactByIdFromCRMPlatform {
-  async getById(contactId: string): Promise<Contact> {
-    return {
-      id: contactId,
-      name: 'name',
-      email: 'email',
-      firstname: 'firstname',
-      lastname: 'lastname'
-    }
-  }
-}
+type PetWithPropertiesOptional = AllPropertiesOptional<Pet>
 
 let dbClient: PrismaClient | undefined = undefined
 
@@ -59,18 +23,7 @@ describe('Create Pet Controller', () => {
 
     await connect(dbClient)
 
-    const createPetInHubSpot = new CreatePetInHubSpotUseCaseMock()
-    const getContactIdFromHubSpot = new GetContactByIdFromHubSpotUseCaseMock()
-    const petRepository = new PrismaPetRepository()
-    const contactRepository = new PrismaContactRepository()
-    const breedRepository = new PrismaBreedRepository()
-    const createPetController = new CreatePetController(
-      createPetInHubSpot,
-      getContactIdFromHubSpot,
-      petRepository,
-      breedRepository,
-      contactRepository
-    )
+    const createPetController = makeCreatePetControllerTest()
 
     app.post('/pet', createPetController.handle)
 
@@ -88,7 +41,7 @@ describe('Create Pet Controller', () => {
 
   describe('given a invalid body', () => {
     it('when name is not provided, then should get bad request error', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         age: 1,
         breed: 'Pelo Curto Brasileiro',
         contactId: '821172829'
@@ -100,7 +53,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when name is not provided, then should get bad request error message', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         age: 1,
         breed: 'Pelo Curto Brasileiro',
         contactId: '821172829'
@@ -114,7 +67,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when age is not provided, then should get bad request error', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         name: 'Ella',
         breed: 'Pelo Curto Brasileiro',
         contactId: '821172829'
@@ -126,7 +79,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when age is not provided, then should get bad request error message', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         name: 'Ella',
         breed: 'Pelo Curto Brasileiro',
         contactId: '821172829'
@@ -140,7 +93,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when breed is not provided, then should get bad request error', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         name: 'Ella',
         age: 1,
         contactId: '821172829'
@@ -152,7 +105,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when breed is not provided, then should get bad request error message', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         name: 'Ella',
         age: 1,
         contactId: '821172829'
@@ -166,7 +119,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when contactId is not provided, then should get bad request error', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         name: 'Ella',
         age: 1,
         breed: 'Pelo Curto Brasileiro'
@@ -178,7 +131,7 @@ describe('Create Pet Controller', () => {
     })
 
     it('when contactId is not provided, then should get bad request error message', async () => {
-      const pet: Pet = {
+      const pet: PetWithPropertiesOptional = {
         name: 'Ella',
         age: 1,
         breed: 'Pelo Curto Brasileiro'
