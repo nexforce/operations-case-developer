@@ -99,5 +99,15 @@ describe('List Pets Controller', () => {
 
       expect(response.statusCode).toBe(400)
     })
+
+    it('should return a bad request error message', async () => {
+      const breed = ''
+
+      const response = await request(app).get(`/pet?breed=${breed}`).send()
+
+      expect(response.body).toEqual({
+        message: 'Expected a valid string as value for \'breed\' query param'
+      })
+    })
   })
 })
