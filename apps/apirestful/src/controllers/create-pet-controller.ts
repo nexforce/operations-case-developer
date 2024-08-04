@@ -2,32 +2,32 @@ import { Request, Response } from 'express'
 // import { db } from '../services/db/client'
 import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
 import { PrismaClient } from '@prisma/client'
-// import { PetRepository } from '../repositories/pet-repository'
-// import { ContactRepository } from '../repositories/contact-repository'
-// import { BreedRepository } from '../repositories/breed-repository'
+import { PetRepository } from '../repositories/pet-repository'
+import { ContactRepository } from '../repositories/contact-repository'
+import { BreedRepository } from '../repositories/breed-repository'
 
 class CreatePetController {
   private createPetInHubSpot: CreatePetInCRMPlatform
   private getContactIdFromHubSpot: GetContactByIdFromCRMPlatform 
   private db: PrismaClient
-  // private petRepository: PetRepository
-  // private contactRepository: ContactRepository
-  // private breedRepository: BreedRepository
+  private petRepository: PetRepository
+  private contactRepository: ContactRepository
+  private breedRepository: BreedRepository
 
   constructor(
     createPetInHubSpotInput: CreatePetInCRMPlatform,
     getContactIdFromHubSpotInput: GetContactByIdFromCRMPlatform,
-    db: PrismaClient
-    // petRepositoryInput: PetRepository,
-    // breedRepositoryInput: BreedRepository,
-    // contactRepositoryInput: ContactRepository,
+    db: PrismaClient,
+    petRepositoryInput: PetRepository,
+    breedRepositoryInput: BreedRepository,
+    contactRepositoryInput: ContactRepository,
   ) { 
     this.createPetInHubSpot = createPetInHubSpotInput
     this.getContactIdFromHubSpot = getContactIdFromHubSpotInput
     this.db = db
-    // this.petRepository = petRepositoryInput
-    // this.contactRepository = contactRepositoryInput
-    // this.breedRepository = breedRepositoryInput
+    this.petRepository = petRepositoryInput
+    this.contactRepository = contactRepositoryInput
+    this.breedRepository = breedRepositoryInput
 
     this.handle = this.handle.bind(this);
   }

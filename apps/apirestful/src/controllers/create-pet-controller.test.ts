@@ -5,6 +5,9 @@ import CreatePetController from './create-pet-controller'
 import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
 import { connect, disconnect, eraseRecords, createClient } from '../services/db/client'
 import { PrismaClient } from '@prisma/client'
+import { PrismaPetRepository } from '../repositories/prisma-pet-repository'
+import { PrismaContactRepository } from '../repositories/prisma-contact-repository'
+import { PrismaBreedRepository } from '../repositories/prisma-breed-repository'
 
 
 type Pet = {
@@ -56,7 +59,17 @@ describe('Create Pet Controller', () => {
 
     const createPetInHubSpot = new CreatePetInHubSpotUseCaseMock()
     const getContactIdFromHubSpot  = new GetContactByIdFromHubSpotUseCaseMock()
-    const createPetController = new CreatePetController(createPetInHubSpot, getContactIdFromHubSpot, dbClient)
+    const petRepository = new PrismaPetRepository()
+    const contactRepository = new PrismaContactRepository()
+    const breedRepository = new PrismaBreedRepository()
+    const createPetController = new CreatePetController(
+      createPetInHubSpot,
+      getContactIdFromHubSpot,
+      dbClient,
+      petRepository,
+      breedRepository,
+      contactRepository
+    )
 
     app.post('/pet', createPetController.handle)
 
