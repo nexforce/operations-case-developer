@@ -5,6 +5,7 @@ import UpdatePetController from '../controllers/update-pet-controller'
 import DeletePetController from '../controllers/delete-pet-controller'
 import GetContactByIdFromHubSpotUseCase from '../usecases/get-contact-by-id-from-hub-spot'
 import CreatePetInHubSpotUseCase from '../usecases/create-pet-in-hub-spot'
+import { createClient } from '../services/db/client'
 
 const router = Router()
 
@@ -14,9 +15,11 @@ router.get('/', (_, response) => {
 
 const createPetInHubSpot = new CreatePetInHubSpotUseCase()
 const getContactIdFromHubSpot  = new GetContactByIdFromHubSpotUseCase()
+const dbClient = createClient()
 const createPetController = new CreatePetController(
   createPetInHubSpot,
-  getContactIdFromHubSpot
+  getContactIdFromHubSpot,
+  dbClient
 )
 
 router.post('/pet', createPetController.handle)

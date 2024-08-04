@@ -1,8 +1,11 @@
-import { it, describe, expect, beforeAll } from 'vitest'
+import { it, describe, expect, beforeAll, afterAll } from 'vitest'
 import request from 'supertest'
 import app from '../app'
 import CreatePetController from './create-pet-controller'
 import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
+import { connect, disconnect, eraseRecords, createClient } from '../services/db/client'
+import { PrismaClient } from '@prisma/client'
+
 
 type Pet = {
   name?: string
@@ -42,15 +45,31 @@ class GetContactByIdFromHubSpotUseCaseMock implements GetContactByIdFromCRMPlatf
   }
 }
 
+let dbClient: PrismaClient | undefined = undefined 
+
 describe('Create Pet Controller', () => {
-  beforeAll(() => {
+  beforeAll(async () => {
+
+    dbClient = createClient()
+
+    await connect(dbClient)
+
     const createPetInHubSpot = new CreatePetInHubSpotUseCaseMock()
     const getContactIdFromHubSpot  = new GetContactByIdFromHubSpotUseCaseMock()
-    const createPetController = new CreatePetController(createPetInHubSpot, getContactIdFromHubSpot)
+    const createPetController = new CreatePetController(createPetInHubSpot, getContactIdFromHubSpot, dbClient)
 
     app.post('/pet', createPetController.handle)
 
     console.log(process.env['DATABASE_URL'])
+  })
+
+  afterAll(async () => {
+    if (!dbClient) {
+      return
+    }
+
+    await disconnect(dbClient)
+    await eraseRecords(dbClient)
   })
 
   describe('given a invalid body', () => {
