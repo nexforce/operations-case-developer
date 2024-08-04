@@ -1,4 +1,4 @@
-import { it, describe, expect, beforeAll, afterAll } from 'vitest'
+import { it, describe, expect, beforeAll, afterAll, afterEach } from 'vitest'
 import { connect, disconnect, eraseRecords, createClient } from '../services/db/client'
 import request from 'supertest'
 import { PrismaClient } from '@prisma/client'
@@ -34,13 +34,20 @@ describe('List Pets Controller', () => {
 
   })
 
+  afterEach(async () => {
+    if (!dbClient) {
+      return
+    }
+
+    await eraseRecords(dbClient)
+  })
+
   afterAll(async () => {
     if (!dbClient) {
       return
     }
 
     await disconnect(dbClient)
-    await eraseRecords(dbClient)
   })
 
   describe('when is created a pet', () => {
@@ -60,7 +67,8 @@ describe('List Pets Controller', () => {
 
       const petResponse = {
         name: pet.name,
-        age: pet.age
+        age: pet.age,
+        breed: 'Pelo Curto Brasileiro'
       }
 
       const responseBody: GetResponse = response.body
@@ -113,7 +121,7 @@ describe('List Pets Controller', () => {
     })
 
     describe('with valid value', () => {
-      it('should return a pet data with status code success', async () => {
+      it('should return a pet data with ok', async () => {
         const pet: Pet = {
           name: 'Ella',
           age: 1,
@@ -132,11 +140,9 @@ describe('List Pets Controller', () => {
         const responseBody: GetResponse = response.body
 
         expect(response.statusCode).toBe(200)
-        expect(responseBody.items).toBe(expect.arrayContaining([
+        expect(responseBody.items).toEqual(expect.arrayContaining([
           expect.objectContaining({
-            breed: {
-              name: breed
-            }
+            breed
           })
         ]))
       })
