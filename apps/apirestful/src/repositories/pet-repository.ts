@@ -8,7 +8,17 @@ export type CreateData = {
   hubSpotId: string
 }
 
+export type GetPaginatedData = {
+  skip: number,
+  take: number,
+  orderBy?: {
+    createdAt?: 'asc' | 'desc'
+  }
+}
+
 
 export interface PetRepository {
   create: (data: CreateData) => Promise<Pet>
+  getPaginated: (data: GetPaginatedData) => Promise<Pet[]>
+  count: () => Promise<number>
 }
