@@ -10,19 +10,16 @@ const Home: FC = () => {
       <div className="px-6 py-3">
         <Header />
 
-        <main className="flex flex-col gap-y-4">
-          <div className="flex justify-end">
-            <Button className="bg-blue-700">
-              <a href="/pet/adicionar">Adicionar</a>
-            </Button>
+        <main className="text-center pt-20 w-full flex flex-col gap-y-4">
+          <div>
+            Esse é o teste prático de Matheus Oliveira para a Nexforce.
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <PetCard />
-            <PetCard />
-            <PetCard />
-            <PetCard />
-            <PetCard />
+          <div>Accese o cabeçalho de navegação acima para utilizar a aplicação.</div>
+
+          <div className="flex gap-x-1 mx-auto pt-12">
+            <div className="font-semibold">Tema:</div>
+            <div>Pets</div>
           </div>
         </main>
       </div>
