@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import ListPetsController from '../controllers/list-pets-controller'
 import UpdatePetController from '../controllers/update-pet-controller'
 import DeletePetController from '../controllers/delete-pet-controller'
-import { makeCreatePetController } from '../factories/create-pet-controller'
+import { makeCreatePetController } from '../factories/make-create-pet-controller'
+import { makeListPetsController } from '../factories/make-list-pets-controller'
 
 const router = Router()
 
@@ -14,7 +14,7 @@ const createPetController = makeCreatePetController()
 
 router.post('/pet', createPetController.handle)
 
-const listPetsController = new ListPetsController()
+const listPetsController = makeListPetsController()
 
 router.get('/pet', listPetsController.handle)
 
