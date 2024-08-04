@@ -5,10 +5,10 @@ import logo from '../assets/logo.jpeg'
 const Header: FC = () => {
   return (
     <header className="flex justify-between mb-8">
-      <div className="flex gap-x-2 items-center">
+      <a className="flex gap-x-2 items-center" href="/">
         <img src={logo} alt="Logo of Nexforce" width={25} height={25} />
         <h1 className="text-base font-semibold text-foreground">Case Nexforce</h1>
-      </div>
+      </a>
 
       <NavigationMenu className="pe-6">
         <NavigationMenuList className="gap-x-5">
