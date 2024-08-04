@@ -1,7 +1,5 @@
 import { Request, Response } from 'express'
-// import { db } from '../services/db/client'
 import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
-import { PrismaClient } from '@prisma/client'
 import { PetRepository } from '../repositories/pet-repository'
 import { ContactRepository } from '../repositories/contact-repository'
 import { BreedRepository } from '../repositories/breed-repository'
@@ -9,7 +7,6 @@ import { BreedRepository } from '../repositories/breed-repository'
 class CreatePetController {
   private createPetInHubSpot: CreatePetInCRMPlatform
   private getContactIdFromHubSpot: GetContactByIdFromCRMPlatform
-  private db: PrismaClient
   private petRepository: PetRepository
   private contactRepository: ContactRepository
   private breedRepository: BreedRepository
@@ -17,14 +14,12 @@ class CreatePetController {
   constructor(
     createPetInHubSpotInput: CreatePetInCRMPlatform,
     getContactIdFromHubSpotInput: GetContactByIdFromCRMPlatform,
-    db: PrismaClient,
     petRepositoryInput: PetRepository,
     breedRepositoryInput: BreedRepository,
     contactRepositoryInput: ContactRepository,
   ) {
     this.createPetInHubSpot = createPetInHubSpotInput
     this.getContactIdFromHubSpot = getContactIdFromHubSpotInput
-    this.db = db
     this.petRepository = petRepositoryInput
     this.contactRepository = contactRepositoryInput
     this.breedRepository = breedRepositoryInput
@@ -70,30 +65,24 @@ class CreatePetController {
 
     const contactIdFromHubSpot = contactFromHubspot.id
 
-    const contact = await this.db.contact.create({
-      data: {
-        name: contactFromHubspot.firstname + ' ' + contactFromHubspot.lastname.split(' ')[0],
-        email: contactFromHubspot.email,
-        hubSpotId: contactIdFromHubSpot
-      }
+    const contact = await this.contactRepository.create({
+      name: contactFromHubspot.firstname + ' ' + contactFromHubspot.lastname.split(' ')[0],
+      email: contactFromHubspot.email,
+      hubSpotId: contactIdFromHubSpot
     })
 
-    const breedRecord = await this.db.breed.create({
-      data: {
-        name: breed,
-      }
+    const breedRecord = await this.breedRepository.create({
+      name: breed,
     })
 
     const petIdFromHubSpot = results.id
 
-    const pet = await this.db.pet.create({
-      data: {
-        name,
-        age,
-        breedId: breedRecord.id,
-        hubSpotId: petIdFromHubSpot,
-        contactId: contact.id
-      }
+    const pet = await this.petRepository.create({
+      name,
+      age,
+      breedId: breedRecord.id,
+      hubSpotId: petIdFromHubSpot,
+      contactId: contact.id
     })
 
     return response.status(201).json(pet)

@@ -67,7 +67,6 @@ describe('Create Pet Controller', () => {
     const createPetController = new CreatePetController(
       createPetInHubSpot,
       getContactIdFromHubSpot,
-      dbClient,
       petRepository,
       breedRepository,
       contactRepository
