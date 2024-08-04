@@ -69,4 +69,12 @@ describe('List Pets Controller', () => {
       ]))
     })
   })
+
+  describe('when is server running with success', () => {
+    it('should return status ok', async () => {
+      const response = await request(app).get('/pet').send()
+
+      expect(response.statusCode).toEqual(200)
+    })
+  })
 })
