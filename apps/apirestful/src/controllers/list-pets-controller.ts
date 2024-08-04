@@ -20,7 +20,9 @@ class ListPetsController {
     const breed = String(request.query.breed)
 
     if (!breed.trim()) {
-      return response.status(400).send()
+      return response.status(400).send({
+        message: 'Expected a valid string as value for \'breed\' query param'
+      })
     }
 
     const pets = await this.petRepository.getPaginated({
