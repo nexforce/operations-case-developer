@@ -76,5 +76,18 @@ describe('List Pets Controller', () => {
 
       expect(response.statusCode).toEqual(200)
     })
+
+    it('should return data of pagination', async () => {
+      const response = await request(app).get('/pet').send()
+
+      const responseBody: GetResponse = response.body
+      expect(responseBody).toEqual(expect.objectContaining({
+        items: expect.any(Array),
+        totalItems: expect.any(Number),
+        totalPages: expect.any(Number),
+        currentPage: 1,
+        pageSize: 10
+      }))
+    })
   })
 })
