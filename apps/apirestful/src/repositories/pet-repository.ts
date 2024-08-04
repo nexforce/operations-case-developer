@@ -13,6 +13,9 @@ export type GetPaginatedData = {
   take: number,
   orderBy?: {
     createdAt?: 'asc' | 'desc'
+  },
+  where?: {
+    breed?: string
   }
 }
 

@@ -17,6 +17,12 @@ class ListPetsController {
     const pageSize = parseInt(request.query.pageSize as string) || 10
     const skip = (page - 1) * pageSize
 
+    const breed = String(request.query.breed)
+
+    if (!breed.trim()) {
+      return response.status(400).send()
+    }
+
     const pets = await this.petRepository.getPaginated({
       skip,
       take: pageSize,
