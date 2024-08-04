@@ -90,4 +90,14 @@ describe('List Pets Controller', () => {
       }))
     })
   })
+
+  describe('when breed filter is specified with invalid value', () => {
+    it('should return a bad request error', async () => {
+      const breed = ''
+
+      const response = await request(app).get(`/pet?breed=${breed}`).send()
+
+      expect(response.statusCode).toBe(400)
+    })
+  })
 })
