@@ -1,6 +1,5 @@
 import CreatePetController from "../controllers/create-pet-controller";
 import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from "../protocols";
-import { PrismaBreedRepository } from "../repositories/prisma-breed-repository";
 import { PrismaContactRepository } from "../repositories/prisma-contact-repository";
 import { PrismaPetRepository } from "../repositories/prisma-pet-repository";
 
@@ -41,12 +40,10 @@ export const makeCreatePetControllerTest = () => {
   const getContactIdFromHubSpot = new GetContactByIdFromHubSpotUseCaseMock()
   const petRepository = new PrismaPetRepository()
   const contactRepository = new PrismaContactRepository()
-  const breedRepository = new PrismaBreedRepository()
   const createPetController = new CreatePetController(
     createPetInHubSpot,
     getContactIdFromHubSpot,
     petRepository,
-    breedRepository,
     contactRepository
   )
 

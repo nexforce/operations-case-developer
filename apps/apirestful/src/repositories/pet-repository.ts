@@ -3,7 +3,7 @@ import { Pet } from '@prisma/client'
 export type CreateData = {
   name: string
   age: number
-  breedId: string
+  breed: string
   contactId: string
   hubSpotId: string
 }

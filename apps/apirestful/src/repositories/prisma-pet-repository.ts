@@ -14,9 +14,7 @@ export class PrismaPetRepository implements PetRepository {
         createdAt: data.orderBy?.createdAt
       },
       where: {
-        breed: {
-          name: data.where?.breed
-        }
+        name: data.where?.breed
       }
     })
 

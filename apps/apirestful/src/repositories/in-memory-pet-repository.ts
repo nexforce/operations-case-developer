@@ -9,7 +9,7 @@ export class InMemoryPetRepository implements PetRepository {
       id: Math.random().toString(36).substring(2, 9),
       name: data.name,
       age: data.age,
-      breedId: data.breedId,
+      breed: data.breed,
       contactId: data.contactId,
       hubSpotId: data.hubSpotId,
       createdAt: new Date(),

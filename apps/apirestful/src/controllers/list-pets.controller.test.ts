@@ -91,23 +91,56 @@ describe('List Pets Controller', () => {
     })
   })
 
-  describe('when breed filter is specified with invalid value', () => {
-    it('should return a bad request error', async () => {
-      const breed = ''
+  describe('when breed filter is specified', () => {
+    describe('with invalid value', () => {
+      it('should return a bad request error', async () => {
+        const breed = ''
 
-      const response = await request(app).get(`/pet?breed=${breed}`).send()
+        const response = await request(app).get(`/pet?breed=${breed}`).send()
 
-      expect(response.statusCode).toBe(400)
+        expect(response.statusCode).toBe(400)
+      })
+
+      it('should return a bad request error message', async () => {
+        const breed = ''
+
+        const response = await request(app).get(`/pet?breed=${breed}`).send()
+
+        expect(response.body).toEqual({
+          message: 'Expected a valid string as value for \'breed\' query param'
+        })
+      })
     })
 
-    it('should return a bad request error message', async () => {
-      const breed = ''
+    describe('with valid value', () => {
+      it('should return a pet data with status code success', async () => {
+        const pet: Pet = {
+          name: 'Ella',
+          age: 1,
+          breed: 'Pelo Curto Brasileiro',
+          contactId: '44671233162'
+        }
 
-      const response = await request(app).get(`/pet?breed=${breed}`).send()
+        await request(app)
+          .post('/pet')
+          .send(pet)
 
-      expect(response.body).toEqual({
-        message: 'Expected a valid string as value for \'breed\' query param'
+        const breed = pet.breed
+
+        const response = await request(app).get(`/pet?breed=${breed}`).send()
+
+        const responseBody: GetResponse = response.body
+
+        expect(response.statusCode).toBe(200)
+        expect(responseBody.items).toBe(expect.arrayContaining([
+          expect.objectContaining({
+            breed: {
+              name: breed
+            }
+          })
+        ]))
       })
     })
   })
+
 })

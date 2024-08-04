@@ -2,27 +2,23 @@ import { Request, Response } from 'express'
 import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
 import { PetRepository } from '../repositories/pet-repository'
 import { ContactRepository } from '../repositories/contact-repository'
-import { BreedRepository } from '../repositories/breed-repository'
 
 class CreatePetController {
   private createPetInHubSpot: CreatePetInCRMPlatform
   private getContactIdFromHubSpot: GetContactByIdFromCRMPlatform
   private petRepository: PetRepository
   private contactRepository: ContactRepository
-  private breedRepository: BreedRepository
 
   constructor(
     createPetInHubSpotInput: CreatePetInCRMPlatform,
     getContactIdFromHubSpotInput: GetContactByIdFromCRMPlatform,
     petRepositoryInput: PetRepository,
-    breedRepositoryInput: BreedRepository,
     contactRepositoryInput: ContactRepository,
   ) {
     this.createPetInHubSpot = createPetInHubSpotInput
     this.getContactIdFromHubSpot = getContactIdFromHubSpotInput
     this.petRepository = petRepositoryInput
     this.contactRepository = contactRepositoryInput
-    this.breedRepository = breedRepositoryInput
 
     this.handle = this.handle.bind(this);
   }
@@ -47,7 +43,7 @@ class CreatePetController {
 
     if (!breed) {
       return response.status(400).send({
-        message: 'BreedId is not provided. Ensure a value of type uuid is provided.'
+        message: 'Breed is not provided. Ensure a value of type uuid is provided.'
       })
     }
 
@@ -71,16 +67,12 @@ class CreatePetController {
       hubSpotId: contactIdFromHubSpot
     })
 
-    const breedRecord = await this.breedRepository.create({
-      name: breed,
-    })
-
     const petIdFromHubSpot = results.id
 
     const pet = await this.petRepository.create({
       name,
       age,
-      breedId: breedRecord.id,
+      breed: breed,
       hubSpotId: petIdFromHubSpot,
       contactId: contact.id
     })

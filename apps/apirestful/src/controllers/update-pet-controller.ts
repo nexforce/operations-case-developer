@@ -5,7 +5,7 @@ import hubspotClient from '../services/hubspot-client'
 type UpdateProps = {
   name?: string
   age?: number
-  breedId?: string
+  breed?: string
 }
 
 class UpdatePetController {
@@ -13,7 +13,7 @@ class UpdatePetController {
     const petId = request.params['id'] as string
     const name = request.body['name'] as string
     const age = request.body['age'] as number
-    const breedId = request.body['breedId'] as string
+    const breed = request.body['breed'] as string
 
     let update: UpdateProps = {}
 
@@ -25,42 +25,25 @@ class UpdatePetController {
       update = { ...update, age }
     }
 
-    if (breedId) {
-      update = { ...update, breedId }
+    if (breed) {
+      update = { ...update, breed }
     }
 
     const petFound = await db.pet.findUnique({
       where: {
         id: petId
-      },
-      include: {
-        breed: true
       }
     })
 
     if (!petFound) return response.status(404).json({ message: 'Pet not found' })
 
-    const breedOfPetFound = petFound.breed
-
     const petHubSpotId = petFound.hubSpotId
-
-    let breed = undefined
-
-    if (update.breedId) {
-      breed = await db.breed.findUnique({
-        where: {
-          id: update.breedId
-        }
-      })
-
-      if (!breed) return response.status(404).json({ message: 'Breed not found' })
-    }
 
     await hubspotClient.crm.objects.basicApi.update('pets', petHubSpotId, {
       properties: {
         name: update.name ? update.name : petFound.name,
         age: update?.age ? update.age?.toString() : petFound.age.toString(),
-        breed: update.breedId && breed ? breed.name : breedOfPetFound.name
+        breed: update.breed ? update.breed : petFound.breed
       }
     })
 
@@ -71,7 +54,7 @@ class UpdatePetController {
       data: {
         name: update.name,
         age: update.age,
-        breedId: update.breedId
+        breed: update.breed
       }
     })
 

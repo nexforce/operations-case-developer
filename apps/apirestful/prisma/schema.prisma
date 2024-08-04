@@ -16,7 +16,7 @@ datasource db {
 model Pet {
   id String @id @default(uuid())
   name String
-  breedId String
+  breed String
   age Int
   contactId String
   hubSpotId String
@@ -24,18 +24,7 @@ model Pet {
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 
-  breed Breed @relation(fields: [breedId], references: [id], onDelete: Cascade)
   contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
-}
-
-model Breed {
-  id String @id @default(uuid())
-  name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime? @updatedAt
-  deletedAt DateTime?
-
-  pets Pet[]
 }
 
 model Contact {

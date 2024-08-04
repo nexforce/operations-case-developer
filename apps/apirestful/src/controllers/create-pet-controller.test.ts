@@ -1,13 +1,8 @@
 import { it, describe, expect, beforeAll, afterAll } from 'vitest'
 import request from 'supertest'
 import app from '../app'
-import CreatePetController from './create-pet-controller'
-import { CreatePetInCRMPlatform, GetContactByIdFromCRMPlatform } from '../protocols'
 import { connect, disconnect, eraseRecords, createClient } from '../services/db/client'
 import { PrismaClient } from '@prisma/client'
-import { PrismaPetRepository } from '../repositories/prisma-pet-repository'
-import { PrismaContactRepository } from '../repositories/prisma-contact-repository'
-import { PrismaBreedRepository } from '../repositories/prisma-breed-repository'
 import { Pet } from '../data/pet'
 import { AllPropertiesOptional } from '../utils/types/all-undefined'
 import { makeCreatePetControllerTest } from '../factories/make-create-pet-controller-test'
@@ -114,7 +109,7 @@ describe('Create Pet Controller', () => {
       const response = await request(app).post('/pet').send(pet)
 
       expect(response.body).toEqual({
-        message: 'BreedId is not provided. Ensure a value of type uuid is provided.'
+        message: 'Breed is not provided. Ensure a value of type uuid is provided.'
       })
     })
 
