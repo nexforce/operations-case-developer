@@ -1,12 +1,14 @@
 import { FC } from "react"
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from '@/components/ui/navigation-menu'
+
 import logo from '../assets/logo.jpeg'
+import PetCard from "@/components/pet-card"
 
 const Home: FC = () => {
   return (
     <>
-      <div>
-        <header className="flex justify-between px-6 py-3">
+      <div className="px-6 py-3">
+        <header className="flex justify-between mb-8">
           <div className="flex gap-x-2 items-center">
             <img src={logo} alt="Logo of Nexforce" width={25} height={25} />
             <h1 className="text-base font-semibold text-foreground">Case Nexforce</h1>
@@ -28,6 +30,14 @@ const Home: FC = () => {
             </NavigationMenuList>
           </NavigationMenu>
         </header>
+
+        <main className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <PetCard />
+          <PetCard />
+          <PetCard />
+          <PetCard />
+          <PetCard />
+        </main>
       </div>
     </>
   )
