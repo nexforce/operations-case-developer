@@ -3,6 +3,7 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 
 import logo from '../assets/logo.jpeg'
 import PetCard from "@/components/pet-card"
+import { Button } from "@/components/ui/button"
 
 const Home: FC = () => {
   return (
@@ -31,12 +32,20 @@ const Home: FC = () => {
           </NavigationMenu>
         </header>
 
-        <main className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <PetCard />
-          <PetCard />
-          <PetCard />
-          <PetCard />
-          <PetCard />
+        <main className="flex flex-col gap-y-4">
+          <div className="flex justify-end">
+            <Button className="bg-blue-700">
+              <a href="/pet/adicionar">Adicionar</a>
+            </Button>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <PetCard />
+            <PetCard />
+            <PetCard />
+            <PetCard />
+            <PetCard />
+          </div>
         </main>
       </div>
     </>
