@@ -41,7 +41,7 @@ const useFetchPets = () => {
 
   useEffect(() => {
     fetchPets()
-  }, [])
+  }, [petsPagination])
 
   return {
     data: petsPagination,

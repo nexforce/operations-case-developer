@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { z } from "zod"
+import { useNavigate } from 'react-router-dom'
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -33,6 +34,8 @@ const EditPetForm: FC = () => {
     contactId: ''
   })
 
+  const navigate = useNavigate();
+
   const { id } = useParams()
   const { data } = useFetchPetById(id)
   const { editPet } = useEditPet(id)
@@ -63,6 +66,8 @@ const EditPetForm: FC = () => {
       ...values,
       contactId: '44671233162'
     })
+
+    navigate(`/pets/${id}`)
   }
 
   return (

@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,7 @@ import useDeletePetById from "@/hooks/api/useDeletePetById";
 const PetDetails: FC = () => {
   const [updatedAt, setUpdatedAt] = useState<string | undefined>(undefined)
   const { id } = useParams()
+  const navigate = useNavigate()
 
   const { data } = useFetchPetById(id)
 
@@ -75,7 +76,10 @@ const PetDetails: FC = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction onClick={deletePet}>Continuar</AlertDialogAction>
+                      <AlertDialogAction onClick={() => {
+                        deletePet()
+                        navigate(`/pets`)
+                      }}>Continuar</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
