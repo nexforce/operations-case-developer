@@ -4,9 +4,12 @@ import PetCard from "@/components/pet-card"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/header"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
-import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from "@/components/ui/pagination"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination"
+import useFetchPets from "@/hooks/api/useFetchPets"
 
 const Pets: FC = () => {
+  const { data } = useFetchPets()
+
   return (
     <>
       <div className="px-6 py-3">
@@ -34,21 +37,24 @@ const Pets: FC = () => {
           </div>
 
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <PetCard />
-            <PetCard />
-            <PetCard />
-            <PetCard />
-            <PetCard />
+            {data?.items.map(pet => (
+              <PetCard
+                id={pet.id}
+                name={pet.name}
+                age={pet.age}
+                breed={pet.breed}
+                key={pet.id}
+              />
+            ))}
           </div>
 
           <Pagination>
             <PaginationContent>
-              <PaginationItem>
-                <PaginationLink className="bg-gray-700 text-white" href="#">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
-              </PaginationItem>
+              {new Array(data?.totalPages).fill(0).map((_, index) => (
+                <PaginationItem>
+                  <PaginationLink className={data?.currentPage == index + 1 ? "bg-gray-700 text-white" : ""} href="#">{index + 1}</PaginationLink>
+                </PaginationItem>
+              ))}
             </PaginationContent>
           </Pagination>
         </main>

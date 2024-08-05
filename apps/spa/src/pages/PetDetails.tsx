@@ -7,39 +7,26 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from '@/components/ui/card'
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
-
-const fetchCat = async () => {
-  const response = await fetch('https://api.sefinek.net/api/v2/random/animal/cat');
-
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-
-  const result = await response.json()
-
-  return result;
-}
+import useFetchPetById from "@/hooks/api/useFetchPetById";
 
 const PetDetails: FC = () => {
   const [updatedAt, setUpdatedAt] = useState<string | undefined>(undefined)
-  const [photo, setPhoto] = useState<string>('')
   const { id } = useParams()
 
+  const { data } = useFetchPetById(id)
+
   useEffect(() => {
-    const today = new Date()
-    const day = String(today.getDate()).padStart(2, '0')
-    const month = String(today.getMonth() + 1).padStart(2, '0')
-    const year = String(today.getFullYear())
+    if (!data) return
+
+    const updatedAt = new Date(data.updatedAt)
+
+    if (!updatedAt) return
+
+    const day = String(updatedAt.getDate()).padStart(2, '0')
+    const month = String(updatedAt.getMonth() + 1).padStart(2, '0')
+    const year = String(updatedAt.getFullYear())
     setUpdatedAt(`${day}/${month}/${year}`)
-
-    fetchCat().then((result) => {
-      setPhoto(result.message)
-    })
-  }, [])
-
-  useEffect(() => {
-    console.log(photo)
-  }, [photo])
+  }, [data?.updatedAt, data])
 
   return (
     <div className="px-6 py-3">
@@ -101,17 +88,17 @@ const PetDetails: FC = () => {
 
                   <div className="flex gap-x-1 text-foreground/80">
                     <label className="font-semibold ">Nome: </label>
-                    <div>Ella</div>
+                    <div>{data?.name}</div>
                   </div>
 
                   <div className="flex gap-x-1 text-foreground/80">
                     <label className="font-semibold ">Idade: </label>
-                    <div>1 ano</div>
+                    <div>{data?.age} ano</div>
                   </div>
 
                   <div className="flex gap-x-1 text-foreground/80">
                     <label className="font-semibold ">Raça: </label>
-                    <div>Pele Curto Brasileiro</div>
+                    <div>{data?.breed}</div>
                   </div>
                 </div>
               </div>

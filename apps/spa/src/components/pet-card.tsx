@@ -2,25 +2,30 @@ import { FC } from "react";
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
-const PetCard: FC = () => {
-  const id = '12345'
+type Props = {
+  id: string
+  name: string
+  age: number
+  breed: string
+}
 
+const PetCard: FC<Props> = ({ id, name, age, breed }) => {
   return (
     <Card className="pt-4 max-w-sm pe-4">
       <CardContent className="text-base">
         <div className="flex gap-x-1 text-foreground/80">
           <label className="font-semibold ">Nome: </label>
-          <div>Ella</div>
+          <div>{name}</div>
         </div>
 
         <div className="flex gap-x-1 text-foreground/80">
           <label className="font-semibold ">Idade: </label>
-          <div>1 ano</div>
+          <div>{age} ano</div>
         </div>
 
         <div className="flex gap-x-1 text-foreground/80">
           <label className="font-semibold ">Raça: </label>
-          <div>Pele Curto Brasileiro</div>
+          <div>{breed}</div>
         </div>
       </CardContent>
 
