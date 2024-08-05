@@ -30,10 +30,13 @@ class ListPetsController {
       take: pageSize,
       orderBy: {
         createdAt: 'asc'
+      },
+      where: {
+        breed: breed
       }
     })
 
-    const totalItems = await this.petRepository.count()
+    const totalItems = await this.petRepository.count(breed)
     const totalPages = Math.ceil(totalItems / pageSize)
 
     return response.status(200).json({ items: pets, totalItems, totalPages, currentPage: page, pageSize })

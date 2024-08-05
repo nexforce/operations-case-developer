@@ -21,8 +21,6 @@ describe('Create Pet Controller', () => {
     const createPetController = makeCreatePetControllerTest()
 
     app.post('/pet', createPetController.handle)
-
-    console.log(process.env['DATABASE_URL'])
   })
 
   afterAll(async () => {

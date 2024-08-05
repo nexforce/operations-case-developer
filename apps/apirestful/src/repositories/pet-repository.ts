@@ -23,7 +23,7 @@ export type GetPaginatedData = {
 export interface PetRepository {
   create: (data: CreateData) => Promise<Pet>
   getPaginated: (data: GetPaginatedData) => Promise<Pet[]>
-  count: () => Promise<number>
+  count: (breed?: string) => Promise<number>
   getById: (id: string) => Promise<Pet | null>
   getBreeds: () => Promise<string[]>
 }

@@ -26,20 +26,32 @@ export class PrismaPetRepository implements PetRepository {
     return pet
   }
 
-  async count(): Promise<number> {
-    return await db.pet.count()
+  async count(breed?: string): Promise<number> {
+    const where = {}
+
+    if (breed !== 'undefined') {
+      where.breed = breed
+    }
+
+    return await db.pet.count({
+      where: where
+    })
   }
 
   async getPaginated(data: GetPaginatedData): Promise<Pet[]> {
+    const where = {}
+
+    if (data.where?.breed !== 'undefined') {
+      where.breed = data.where?.breed
+    }
+
     const pets = await db.pet.findMany({
       skip: data.skip,
       take: data.take,
       orderBy: {
         createdAt: data.orderBy?.createdAt
       },
-      where: {
-        name: data.where?.breed
-      }
+      where: where
     })
 
     return pets
