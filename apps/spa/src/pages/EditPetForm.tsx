@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { z } from "zod"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -9,30 +9,60 @@ import { Input } from "@/components/ui/input"
 import Header from "@/components/header"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import { useParams } from "react-router-dom";
+import useFetchPetById from "@/hooks/api/useFetchPetById";
+import useEditPet from "@/hooks/api/useEditPet";
+
+type PetInput = {
+  name: string
+  breed: string
+  age: number
+  contactId: string
+}
 
 const formSchema = z.object({
   name: z.string().min(2).max(80),
-  age: z.number().gt(0),
+  age: z.string(),
   breed: z.string().min(2).max(80),
 })
 
 const EditPetForm: FC = () => {
+  const [defaultValues, setDefaultValues] = useState<PetInput>({
+    name: '',
+    age: 0,
+    breed: '',
+    contactId: ''
+  })
+
   const { id } = useParams()
+  const { data } = useFetchPetById(id)
+  const { editPet } = useEditPet(id)
+
+  useEffect(() => {
+    if (!data) return
+
+    setDefaultValues(data)
+  }, [data])
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: 'Ella',
-      age: 1,
-      breed: 'Pelo Curto Brasileiro'
+    values: {
+      age: String(defaultValues.age),
+      name: defaultValues.name,
+      breed: defaultValues.breed,
     },
+    defaultValues: {
+      age: '',
+      name: '',
+      breed: ''
+    }
   })
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  function onSubmit({ age, ...values }: z.infer<typeof formSchema>) {
+    editPet({
+      age: Number(age),
+      ...values,
+      contactId: '44671233162'
+    })
   }
 
   return (
