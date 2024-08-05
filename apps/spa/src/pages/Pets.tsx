@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 
 import PetCard from "@/components/pet-card"
 import { Button } from "@/components/ui/button"
@@ -8,7 +8,13 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@
 import useFetchPets from "@/hooks/api/useFetchPets"
 
 const Pets: FC = () => {
-  const { data } = useFetchPets()
+  const [page, setPage] = useState(1)
+
+  useEffect(() => {
+    console.log(page)
+  }, [page])
+
+  const { data } = useFetchPets(page)
 
   return (
     <>
@@ -52,7 +58,9 @@ const Pets: FC = () => {
             <PaginationContent>
               {new Array(data?.totalPages).fill(0).map((_, index) => (
                 <PaginationItem>
-                  <PaginationLink className={data?.currentPage == index + 1 ? "bg-gray-700 text-white" : ""} href="#">{index + 1}</PaginationLink>
+                  <PaginationLink onClick={() => {
+                    setPage(index + 1)
+                  }} className={data?.currentPage == index + 1 ? "bg-primary text-white hover:bg-primary/80 hover:text-white cursor-pointer" : "hover:border hover:bg-border-foreground cursor-pointer"}>{index + 1}</PaginationLink>
                 </PaginationItem>
               ))}
             </PaginationContent>

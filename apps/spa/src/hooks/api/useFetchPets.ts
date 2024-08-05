@@ -21,7 +21,7 @@ type PetsPagination = {
   pageSize: number
 }
 
-const useFetchPets = () => {
+const useFetchPets = (page: number) => {
   const [petsPagination, setPetsPagination] = useState<PetsPagination>()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<unknown | null>(null)
@@ -30,7 +30,7 @@ const useFetchPets = () => {
     setIsLoading(true)
 
     try {
-      const responseBody = await fetchData('/pet')
+      const responseBody = await fetchData(`/pet?page=${page}&pageSize=8`)
       setPetsPagination(responseBody)
     } catch (error) {
       setError(error)
