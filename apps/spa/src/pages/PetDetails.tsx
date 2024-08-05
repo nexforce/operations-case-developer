@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 
 import { Card, CardContent } from '@/components/ui/card'
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 
 const fetchCat = async () => {
   const response = await fetch('https://api.sefinek.net/api/v2/random/animal/cat');
@@ -53,7 +54,24 @@ const PetDetails: FC = () => {
                 <Button variant="secondary">
                   <a href={`/pets/${id}/editar`}>Editar</a>
                 </Button>
-                <Button variant="destructive">Remover</Button>
+
+                <AlertDialog>
+                  <AlertDialogTrigger className="h-0">
+                    <Button variant="destructive">Remover</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Esta ação não pode ser desfeita. Isso excluirá permanentemente sua conta e removerá seus dados de nossos servidores.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction>Continuar</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
 
               <div className="space-y-2">
