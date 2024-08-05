@@ -21,7 +21,12 @@ type PetsPagination = {
   pageSize: number
 }
 
-const useFetchPets = (page: number) => {
+type UseFetchPetsInput = {
+  page: number
+  breedFilter?: string
+}
+
+const useFetchPets = ({ page, breedFilter }: UseFetchPetsInput) => {
   const [petsPagination, setPetsPagination] = useState<PetsPagination>()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<unknown | null>(null)
@@ -30,7 +35,13 @@ const useFetchPets = (page: number) => {
     setIsLoading(true)
 
     try {
-      const responseBody = await fetchData(`/pet?page=${page}&pageSize=8`)
+      let url = `/pet?page=${page}&pageSize=8`
+
+      if (breedFilter && breedFilter !== "Raça") {
+        url += `&breed=${breedFilter}`
+      }
+
+      const responseBody = await fetchData(url)
       setPetsPagination(responseBody)
     } catch (error) {
       setError(error)
@@ -41,7 +52,7 @@ const useFetchPets = (page: number) => {
 
   useEffect(() => {
     fetchPets()
-  }, [petsPagination])
+  }, [page, breedFilter])
 
   return {
     data: petsPagination,
