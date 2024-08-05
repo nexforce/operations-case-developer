@@ -50,7 +50,9 @@ const PetDetails: FC = () => {
           <Card className="max-w-4xl">
             <CardContent className="py-4 flex flex-row-reverse justify-between">
               <div className="flex gap-x-2">
-                <Button variant="secondary">Editar</Button>
+                <Button variant="secondary">
+                  <a href={`/pets/${id}/editar`}>Editar</a>
+                </Button>
                 <Button variant="destructive">Remover</Button>
               </div>
 
