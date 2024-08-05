@@ -5,6 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch ./src/server.ts",
+    "prod": "node ./dist/server.js",
     "build": "tsup",
     "migrate:dev": "prisma migrate dev",
     "migrate:prod": "prisma migrate deploy",

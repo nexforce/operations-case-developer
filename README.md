@@ -10,9 +10,18 @@
 </tr>
 </table>
 
-## Caso de estudo
-
 ## Tecnologias
+
+Foi utilizado para o front-end:
+ - ReactJS
+ - TailwindCSS (como framework CSS)
+ - Radix (componentes com acessibilidade)
+
+Para o back-end é utilizado:
+ - ExpressJS
+ - PrismaORM
+ - HubSpot API
+ - Vitest (como ferramente de testes)
 
 ## Como configurar
 
@@ -76,3 +85,86 @@ Execute uma requição `GET /pet`:
 http GET localhost:5000/pet
 ```
 
+Rode os testes unitários:
+
+```bash
+pnpm test
+```
+
+#### Execute a aplicação em desenvolvimento
+
+Instale as dependências:
+
+```bash
+pnpm install
+```
+
+Execute em desenvolvimento:
+
+```bash
+pnpm dev
+```
+
+Pronto! A aplicação está pronta para ser utilizada em desenvolvimento. Disponível na porta **5000**.
+
+#### Executar a aplicação em produção
+
+Compile o código em TypeScript para um JavaScript prepadado e otimizado para ambiente de produção:
+
+```bash
+pnpm build
+```
+
+Execute o comando para a aplicação em produção
+
+```bash
+pnpm prod
+```
+
+A aplicação está disponível na porta **5000**
+
+### Front-end
+
+Acesse a pasta `apps/spa`
+
+#### Ambiente de execução
+
+Configure as variáveis de ambiente copiando o conteúdo do arquivo `.env.sample` para um novo arquivo `.env`.
+
+```env
+VITE_SERVER_BASE_URL=http://localhost:5000
+```
+
+#### Executar a aplicação em desenvolvimento
+
+Instale as dependências:
+
+```bash
+pnpm install
+```
+
+Execute em desenvolvimento:
+
+```bash
+pnpm dev
+```
+
+**Observação**: Garanta que a aplicação Back-end esteja rodando e funcionando para o Front-end funcionar adequadamente.
+
+Pronto! A aplicação está pronta para ser utilizada em desenvolvimento
+
+#### Executar a aplicação em produção
+
+Compile o código em TypeScript para um JavaScript prepadado e otimizado para ambiente de produção:
+
+```bash
+pnpm build
+```
+
+Execute o comando para a aplicação em produção
+
+```bash
+pnpm preview
+```
+
+A aplicação está disponível na porta **3000**
