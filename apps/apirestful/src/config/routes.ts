@@ -5,6 +5,7 @@ import { makeCreatePetController } from '../factories/make-create-pet-controller
 import { makeListPetsController } from '../factories/make-list-pets-controller'
 import GetPetByIdController from '../controllers/get-pet-by-id-controller'
 import { PrismaPetRepository } from '../repositories/prisma-pet-repository'
+import ListBreedsController from '../controllers/list-breed-controller'
 
 const router = Router()
 
@@ -20,7 +21,12 @@ const listPetsController = makeListPetsController()
 
 router.get('/pet', listPetsController.handle)
 
+
 const petRepository = new PrismaPetRepository()
+const listBreedsController = new ListBreedsController(petRepository)
+
+router.get('/pet/breed', listBreedsController.handle)
+
 const getPetBydIdController = new GetPetByIdController(petRepository)
 
 router.get('/pet/:id', getPetBydIdController.handle)

@@ -3,6 +3,19 @@ import { CreateData, GetPaginatedData, PetRepository } from "./pet-repository";
 import { db } from '../services/db/client'
 
 export class PrismaPetRepository implements PetRepository {
+  async getBreeds(): Promise<string[]> {
+    const breeds = await db.pet.findMany({
+      distinct: ['breed'],
+      select: {
+        breed: true
+      }
+    })
+
+    const uniqueBreeds = breeds.map(breed => breed.breed)
+
+    return uniqueBreeds
+  }
+
   async getById(id: string): Promise<Pet | null> {
     const pet = await db.pet.findUnique({
       where: {
