@@ -100,7 +100,10 @@ const PetDetails: FC = () => {
 
                   <div className="flex gap-x-1 text-foreground/80">
                     <label className="font-semibold ">Idade: </label>
-                    <div>{data?.age} ano</div>
+                    <div>
+                      {data?.age}
+                      {data?.age === 1 ? " ano" : " anos"}
+                    </div>
                   </div>
 
                   <div className="flex gap-x-1 text-foreground/80">

@@ -20,7 +20,10 @@ const PetCard: FC<Props> = ({ id, name, age, breed }) => {
 
         <div className="flex gap-x-1 text-foreground/80">
           <label className="font-semibold ">Idade: </label>
-          <div>{age} ano</div>
+          <div>
+            {age}
+            {age === 1 ? " ano" : " anos"}
+          </div>
         </div>
 
         <div className="flex gap-x-1 text-foreground/80">
