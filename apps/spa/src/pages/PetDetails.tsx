@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import { Card, CardContent } from '@/components/ui/card'
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
 
 const fetchCat = async () => {
   const response = await fetch('https://api.sefinek.net/api/v2/random/animal/cat');
@@ -45,6 +46,22 @@ const PetDetails: FC = () => {
       <Header />
 
       <main>
+        <Breadcrumb className="mb-6 pt-2">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Início</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/pets">Pets</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Detalhes</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <h1 className="scroll-m-20 pb-2 text-3xl font-semibold tracking-tight first:mt-0">Detalhes do Pet</h1>
 
         <div>
