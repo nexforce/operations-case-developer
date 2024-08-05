@@ -1,6 +1,5 @@
 import { FC } from "react"
 
-import PetCard from "@/components/pet-card"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/header"
 

@@ -4,6 +4,7 @@ import PetCard from "@/components/pet-card"
 import { Button } from "@/components/ui/button"
 import Header from "@/components/header"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationLink, PaginationEllipsis, PaginationNext } from "@/components/ui/pagination"
 
 const Pets: FC = () => {
   return (
@@ -32,9 +33,6 @@ const Pets: FC = () => {
             </div>
           </div>
 
-
-
-
           <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             <PetCard />
             <PetCard />
@@ -42,6 +40,17 @@ const Pets: FC = () => {
             <PetCard />
             <PetCard />
           </div>
+
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationLink className="bg-gray-700 text-white" href="#">1</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">2</PaginationLink>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
         </main>
       </div>
     </>
