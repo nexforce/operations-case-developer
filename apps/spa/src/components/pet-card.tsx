@@ -3,6 +3,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
 const PetCard: FC = () => {
+  const id = '12345'
+
   return (
     <Card className="pt-4 max-w-sm pe-4">
       <CardContent className="text-base">
@@ -24,7 +26,7 @@ const PetCard: FC = () => {
 
       <CardFooter>
         <Button>
-          <a href="/pets">Ver detalhes</a>
+          <a href={`/pets/${id}`}>Ver detalhes</a>
         </Button>
       </CardFooter>
     </Card>

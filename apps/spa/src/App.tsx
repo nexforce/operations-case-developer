@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from '@/pages/Home'
 import CreatePetForm from './pages/CreatePetForm';
 import Pets from './pages/Pets';
+import PetDetails from './pages/PetDetails';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: '/pets',
     element: <Pets />
+  },
+  {
+    path: '/pets/:id',
+    element: <PetDetails />
   },
   {
     path: '/pet/adicionar',
