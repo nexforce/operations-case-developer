@@ -8,12 +8,15 @@ import { Card, CardContent } from '@/components/ui/card'
 import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb";
 import useFetchPetById from "@/hooks/api/useFetchPetById";
+import useDeletePetById from "@/hooks/api/useDeletePetById";
 
 const PetDetails: FC = () => {
   const [updatedAt, setUpdatedAt] = useState<string | undefined>(undefined)
   const { id } = useParams()
 
   const { data } = useFetchPetById(id)
+
+  const { deletePet } = useDeletePetById(id)
 
   useEffect(() => {
     if (!data) return
@@ -72,7 +75,7 @@ const PetDetails: FC = () => {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction>Continuar</AlertDialogAction>
+                      <AlertDialogAction onClick={deletePet}>Continuar</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -105,9 +108,9 @@ const PetDetails: FC = () => {
 
             </CardContent>
           </Card>
-        </div>
-      </main>
-    </div>
+        </div >
+      </main >
+    </div >
   )
 }
 

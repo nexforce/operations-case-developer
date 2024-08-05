@@ -7,7 +7,14 @@ const fetchData = async (endpoint: string, options = {}) => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
+
+    const responseBodyInText = await response.text()
+
+    if (!responseBodyInText) {
+      return
+    }
+
+    const data = JSON.parse(responseBodyInText);
     return data;
   } catch (error) {
     console.error('Error fetching data:', error);
