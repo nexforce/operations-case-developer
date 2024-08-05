@@ -1,11 +1,11 @@
-FROM node:16-bullseye-slim as base
+FROM node:21-bullseye-slim as base
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
   tini \
   && rm -rf /var/lib/apt/lists/*
-RUN npm i -g pnpm@7.19.0
-EXPOSE 8000
+RUN npm i -g pnpm@9.6.0
+EXPOSE 5000
 RUN mkdir /app && chown -R node:node /app
 WORKDIR /app
 USER node

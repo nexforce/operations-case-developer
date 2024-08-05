@@ -20,6 +20,7 @@
     "@prisma/client": "^5.17.0",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "prisma": "^5.17.0",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
@@ -34,7 +35,6 @@
     "eslint-plugin-n": ">=17",
     "eslint-plugin-promise": ">=6",
     "globals": "^15.9.0",
-    "prisma": "^5.17.0",
     "supertest": "^7.0.0",
     "tsup": "^8.2.4",
     "tsx": "^4.16.3",
