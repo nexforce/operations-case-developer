@@ -3,6 +3,8 @@ import UpdatePetController from '../controllers/update-pet-controller'
 import DeletePetController from '../controllers/delete-pet-controller'
 import { makeCreatePetController } from '../factories/make-create-pet-controller'
 import { makeListPetsController } from '../factories/make-list-pets-controller'
+import GetPetByIdController from '../controllers/get-pet-by-id-controller'
+import { PrismaPetRepository } from '../repositories/prisma-pet-repository'
 
 const router = Router()
 
@@ -17,6 +19,11 @@ router.post('/pet', createPetController.handle)
 const listPetsController = makeListPetsController()
 
 router.get('/pet', listPetsController.handle)
+
+const petRepository = new PrismaPetRepository()
+const getPetBydIdController = new GetPetByIdController(petRepository)
+
+router.get('/pet/:id', getPetBydIdController.handle)
 
 const updatePetController = new UpdatePetController()
 

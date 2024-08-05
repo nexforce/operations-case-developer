@@ -3,9 +3,20 @@ import { CreateData, GetPaginatedData, PetRepository } from "./pet-repository";
 import { db } from '../services/db/client'
 
 export class PrismaPetRepository implements PetRepository {
+  async getById(id: string): Promise<Pet | null> {
+    const pet = await db.pet.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return pet
+  }
+
   async count(): Promise<number> {
     return await db.pet.count()
   }
+
   async getPaginated(data: GetPaginatedData): Promise<Pet[]> {
     const pets = await db.pet.findMany({
       skip: data.skip,
