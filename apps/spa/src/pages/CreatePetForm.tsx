@@ -8,14 +8,17 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, For
 import { Input } from "@/components/ui/input"
 import Header from "@/components/header"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb"
+import useCreatePet from "@/hooks/api/useCreatePet"
 
 const formSchema = z.object({
   name: z.string().min(2).max(80),
-  age: z.number().gt(0),
+  age: z.string(),
   breed: z.string().min(2).max(80),
 })
 
 const CreatePetForm: FC = () => {
+  const { createPet } = useCreatePet()
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -25,11 +28,12 @@ const CreatePetForm: FC = () => {
     },
   })
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  function onSubmit({ age, ...values }: z.infer<typeof formSchema>) {
+    createPet({
+      ...values,
+      age: Number(age),
+      contactId: '44671233162'
+    })
   }
 
   return (
