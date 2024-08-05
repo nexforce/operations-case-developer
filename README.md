@@ -10,6 +10,11 @@
 </tr>
 </table>
 
+<div>
+  <img src="./.github/pets_screenshot.png" alt="Pets - página" />
+  <img src="./.github/adicionar_pet_screen.png" alt="Adicionar pets - página" />
+</div>
+
 ## Tecnologias
 
 Foi utilizado para o front-end:
